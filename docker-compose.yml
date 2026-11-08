@@ -1,0 +1,46 @@
+# One-command setup:   docker compose up --build
+# Then open http://localhost:3000  (or the PORT set in your .env)
+#
+# Requires a .env file (copy .env.example to .env first). MongoDB runs in its
+# own container and is wired up automatically, so MONGODB_URI in .env is
+# overridden below.
+#
+# In .env keep ADMIN_PASSWORD_HASH in single quotes, exactly as printed by
+# scripts/hash-password.js. A hash contains $ signs, which Compose would
+# otherwise treat as variables and silently corrupt.
+services:
+  app:
+    build: .
+    ports:
+      - "${PORT:-3000}:${PORT:-3000}"
+    env_file:
+      - .env
+    environment:
+      # Always production, overriding NODE_ENV in .env (the example file ships development).
+      NODE_ENV: production
+      PORT: ${PORT:-3000}
+      MONGODB_URI: mongodb://mongo:27017
+      # No reverse proxy in this setup; set TRUST_PROXY=1 in .env if you put one in front.
+      TRUST_PROXY: ${TRUST_PROXY:-0}
+    volumes:
+      # Uploaded product pictures (UPLOAD_DIR defaults to /app/uploads). Back this volume up with the database.
+      - uploads-data:/app/uploads
+    depends_on:
+      mongo:
+        condition: service_healthy
+    restart: unless-stopped
+
+  mongo:
+    image: mongo:7
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+    restart: unless-stopped
+
+volumes:
+  mongo-data:
+  uploads-data:

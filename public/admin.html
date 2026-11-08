@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title data-brand-title="Admin Dashboard">Admin Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="/img/logo.svg" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="stylesheet" href="/css/ui2.css" />
+  <style>
+    /* Hide controls the logged-in admin has no permission for. This is only a
+       convenience: the server checks every request too. Classes like
+       "can-product-edit" are set on <body> after login (see applyAccess). */
+    body:not(.can-product-create) #addProductCard { display: none !important; }
+    body:not(.can-product-edit) .update-btn,
+    body:not(.can-product-edit) a[href^="#edit-product-"] { display: none !important; }
+    body:not(.can-product-edit) #productTable .form-control { pointer-events: none; background: #f1f3f5; }
+    body:not(.can-product-delete) .delete-btn { display: none !important; }
+    body:not(.can-order-edit) .status-select { pointer-events: none; opacity: .65; }
+    body:not(.can-order-edit) .cod-paid-btn { display: none !important; }
+    body:not(.can-order-details) a[href^="#order-"] { display: none !important; }
+    body:not(.can-coupon-create) #newCouponBtn { display: none !important; }
+    body:not(.can-coupon-edit) .coupon-edit-btn, body:not(.can-coupon-edit) .coupon-toggle-btn { display: none !important; }
+    body:not(.can-coupon-delete) .coupon-delete-btn { display: none !important; }
+    body:not(.can-audit-view) #auditLogNavLink { display: none !important; }
+    .perm-matrix th, .perm-matrix td { text-align: center; vertical-align: middle; }
+    .perm-matrix th:nth-child(2), .perm-matrix td:nth-child(2) { text-align: left; }
+    .admin-sidebar {
+      min-height: calc(100vh - 56px);
+      background: linear-gradient(135deg, #0f1f3d 0%, #17305c 100%);
+      color: white;
+      padding: 2rem 0;
+    }
+    .admin-sidebar .nav-link {
+      color: rgba(255, 255, 255, 0.8);
+      padding: 0.75rem 1.5rem;
+      transition: all 0.3s;
+      border-left: 3px solid transparent;
+    }
+    .admin-sidebar .nav-link:hover,
+    .admin-sidebar .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      border-left-color: white;
+    }
+    .admin-content {
+      padding: 2rem;
+    }
+    /* Clickable statistics cards */
+    .stats-link { display: block; text-decoration: none; color: inherit; }
+    .stats-link .stats-card { transition: transform .15s ease, box-shadow .15s ease; cursor: pointer; }
+    .stats-link:hover .stats-card { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,.18); }
+
+    /* Invoice / order detail page */
+    .invoice { max-width: 900px; margin: 0 auto; background: #fff; border: 1px solid #dee2e6;
+               border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,.06); }
+    .invoice-header { background: linear-gradient(135deg, #0f1f3d 0%, #17305c 100%); color: #e0a92e;
+                      border-bottom: 3px solid #e0a92e; padding: 1rem 1.5rem;
+                      display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .invoice-brand { display: flex; align-items: center; gap: .75rem; font-size: 1.5rem; font-weight: 700; }
+    .invoice-brand img { width: 44px; height: 44px; }
+    .invoice-meta { text-align: right; color: #fff; font-size: .9rem; line-height: 1.5; }
+    .invoice-body { padding: 1.5rem; }
+    .invoice-block h6 { text-transform: uppercase; letter-spacing: .5px; font-size: .75rem; color: #6c757d; margin-bottom: .4rem; }
+    .invoice-block p { margin-bottom: .15rem; }
+    .invoice-footer { background: #f8f9fa; border-top: 1px solid #dee2e6; padding: .9rem 1.5rem;
+                      text-align: center; font-size: .85rem; color: #6c757d; }
+
+    @media print {
+      @page { margin: 12mm; }
+      body { background: #fff !important; }
+      .no-print, .admin-sidebar, #adminDashboard > nav, .admin-content > h1,
+      #alertContainer, .alert { display: none !important; }
+      .admin-content { padding: 0 !important; }
+      main.admin-content { width: 100% !important; flex: 0 0 100% !important; max-width: 100% !important; }
+      /* Chrome's print preview can render a blank page when a gradient
+         background is combined with border-radius + overflow:hidden on the
+         same element - flatten those for print only; the on-screen page is
+         unaffected. */
+      .invoice {
+        border: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        overflow: visible !important;
+        max-width: 100%;
+      }
+      .invoice-header {
+        background: #0f1f3d !important;
+        background-image: none !important;
+      }
+      .invoice-header, .invoice-footer, .table-light, .badge {
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+      }
+    }
+
+    /* Only one admin section is visible at a time - JS shows the active one
+       based on the URL hash, so each nav item behaves like its own page. */
+    .admin-section {
+      display: none;
+    }
+    .stats-card {
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .stats-card h3 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .form-control.is-invalid {
+      border-color: #dc3545;
+      padding-right: calc(1.5em + 0.75rem);
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath d='m5.8 3.6 .4.4.4-.4'/%3e%3cpath d='m6.2 8.4-.4-.4-.4.4'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right calc(0.375em + 0.1875rem) center;
+      background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+    }
+    .invalid-feedback {
+      display: block;
+      width: 100%;
+      margin-top: 0.25rem;
+      font-size: 0.875em;
+      color: #dc3545;
+    }
+    #imageFile {
+      cursor: pointer;
+    }
+    #imageFile:hover {
+      background-color: #f8f9fa;
+    }
+    .spinner-border-sm {
+      width: 1rem;
+      height: 1rem;
+      border-width: 0.15em;
+    }
+  </style>
+</head>
+<body class="bg-light">
+  <!-- Login Form (shown when not authenticated) -->
+  <div id="loginSection" class="d-flex align-items-center justify-content-center" style="min-height: 100vh; background: linear-gradient(135deg, #0f1f3d 0%, #17305c 100%);">
+    <div class="card shadow-lg" style="width: 100%; max-width: 400px; border-radius: 12px;">
+      <div class="card-body p-5">
+        <div class="text-center mb-4">
+          <i class="bi bi-shop-window fs-1 mb-3" style="color:#e0a92e"></i>
+          <h2 class="fw-bold mb-2" data-brand></h2>
+          <p class="text-muted">Admin Login</p>
+        </div>
+        <form id="loginForm">
+          <div class="mb-3">
+            <label for="username" class="form-label fw-semibold">
+              <i class="bi bi-person me-2"></i>Username
+            </label>
+            <input type="text" class="form-control" id="username" placeholder="Enter username" required autocomplete="username">
+          </div>
+          <div class="mb-4">
+            <label for="password" class="form-label fw-semibold">
+              <i class="bi bi-lock me-2"></i>Password
+            </label>
+            <input type="password" class="form-control" id="password" placeholder="Enter password" required autocomplete="current-password">
+          </div>
+          <!-- Two-factor code: shown only when the account has two-factor login turned on -->
+          <div class="mb-4 d-none" id="otpGroup">
+            <label for="otpCode" class="form-label fw-semibold">
+              <i class="bi bi-shield-check me-2"></i>Authentication code
+            </label>
+            <input type="text" class="form-control" id="otpCode" placeholder="6-digit code or a backup code" maxlength="32" autocomplete="one-time-code">
+            <small class="text-muted">Open your authenticator app. No phone? Use one of your backup codes.</small>
+          </div>
+          <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold">
+            <i class="bi bi-box-arrow-in-right me-2"></i>Login
+          </button>
+          <div id="loginError" class="alert alert-danger mt-3 d-none" role="alert"></div>
+        </form>
+        <div class="text-center mt-4">
+          <a href="/" class="text-muted text-decoration-none">
+            <i class="bi bi-arrow-left me-1"></i>Back to Store
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Dashboard (shown when authenticated) -->
+  <div id="adminDashboard" class="d-none">
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="/">
+          <img src="/img/logo.svg" alt="" data-brand-alt="{name}" width="34" height="34" class="me-2 align-text-bottom rounded-circle" style="object-fit:cover;border:2px solid #e0a92e;"><span data-brand-text="{name} - Admin"></span>
+        </a>
+        <div class="d-flex gap-2">
+          <span class="text-white me-3 align-self-center">
+            <i class="bi bi-person-circle me-1"></i><span id="adminUsername">Admin</span>
+          </span>
+          <button id="securityBtn" type="button" class="btn btn-outline-light btn-sm d-none" title="Two-factor login">
+            <i class="bi bi-shield-lock me-1"></i>2FA
+          </button>
+          <button id="logoutBtn" class="btn btn-outline-light btn-sm">
+            <i class="bi bi-box-arrow-right me-1"></i>Logout
+          </button>
+          <a href="/" class="btn btn-outline-light btn-sm">
+            <i class="bi bi-arrow-left me-1"></i>Back to Store
+          </a>
+        </div>
+      </div>
+    </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <aside class="col-md-3 col-lg-2 admin-sidebar">
+        <nav class="nav flex-column">
+          <a class="nav-link active" href="#products-section">
+            <i class="bi bi-box-seam me-2"></i>Products
+          </a>
+          <a class="nav-link" href="#orders-section">
+            <i class="bi bi-receipt me-2"></i>Orders
+          </a>
+          <a class="nav-link" href="#coupons-section" id="couponsNavLink" style="display:none;">
+            <i class="bi bi-ticket-perforated me-2"></i>Coupons
+          </a>
+          <a class="nav-link" href="#vendors-section" id="vendorsNavLink" style="display:none;">
+            <i class="bi bi-shop me-2"></i>Vendors
+          </a>
+          <a class="nav-link" href="#reviews-section" id="reviewsNavLink" style="display:none;">
+            <i class="bi bi-star me-2"></i>Reviews
+          </a>
+          <a class="nav-link" href="#stats-section">
+            <i class="bi bi-graph-up me-2"></i>Statistics
+          </a>
+          <a class="nav-link" href="#roles-section" id="rolesNavLink" style="display:none;">
+            <i class="bi bi-shield-lock me-2"></i>Roles &amp; Access
+          </a>
+          <a class="nav-link" href="#audit-log-section" id="auditLogNavLink" style="display:none;">
+            <i class="bi bi-journal-text me-2"></i>Audit Log
+          </a>
+        </nav>
+      </aside>
+
+      <main class="col-md-9 col-lg-10 admin-content">
+        <h1 class="mb-4">
+          <i class="bi bi-speedometer2 me-2"></i>Admin Dashboard
+        </h1>
+
+        <div id="noAccessNotice" class="alert alert-warning" style="display:none;">
+          <i class="bi bi-lock me-2"></i>Your account has no permissions yet. Ask an Admin to assign you a role.
+        </div>
+
+        <!-- Roles & Access Section (Admin role only) -->
+        <section id="roles-section" class="mb-5 admin-section" style="display:none;">
+          <h2 class="mb-3"><i class="bi bi-shield-lock me-2"></i>Roles &amp; Access</h2>
+          <div class="row g-4 align-items-start">
+            <div class="col-lg-6">
+              <div class="card shadow-sm mb-4">
+                <div class="card-header fw-semibold">Role List</div>
+                <div class="card-body">
+                  <table class="table align-middle mb-0">
+                    <thead><tr><th>Role Name</th><th class="text-end">Actions</th></tr></thead>
+                    <tbody id="roleListBody"><tr><td colspan="2" class="text-muted">Loading...</td></tr></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="card shadow-sm mb-4">
+                <div class="card-header fw-semibold">Create New Role</div>
+                <div class="card-body">
+                  <form id="createRoleForm">
+                    <label for="newRoleName" class="form-label">Role Name:</label>
+                    <input type="text" class="form-control mb-3" id="newRoleName" maxlength="30" autocomplete="off" required />
+                    <button type="submit" class="btn btn-dark">Save</button>
+                  </form>
+                </div>
+              </div>
+
+              <div class="card shadow-sm mb-4">
+                <div class="card-header fw-semibold">Staff Accounts</div>
+                <div class="card-body">
+                  <table class="table align-middle">
+                    <thead><tr><th>User Name</th><th>Roles</th><th class="text-end">Actions</th></tr></thead>
+                    <tbody id="staffListBody"><tr><td colspan="3" class="text-muted">Loading...</td></tr></tbody>
+                  </table>
+                  <hr />
+                  <h6 class="mb-3">Add Staff Account</h6>
+                  <form id="createStaffForm" autocomplete="off">
+                    <div class="mb-3">
+                      <label for="newStaffUsername" class="form-label">User Name:</label>
+                      <input type="text" class="form-control" id="newStaffUsername" maxlength="32" placeholder="e.g. jane" required />
+                      <div class="form-text">3-32 characters: letters, numbers, . _ -</div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="newStaffPassword" class="form-label">Password:</label>
+                      <input type="password" class="form-control" id="newStaffPassword" minlength="8" autocomplete="new-password" required />
+                      <div class="form-text">At least 8 characters.</div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="newStaffRole" class="form-label">Starting Role:</label>
+                      <select class="form-select" id="newStaffRole"></select>
+                    </div>
+                    <button type="submit" class="btn btn-dark">Create Account</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="card shadow-sm mb-4">
+                <div class="card-header fw-semibold">Add Role to User</div>
+                <div class="card-body">
+                  <form id="addRoleForm">
+                    <label for="addRoleUser" class="form-label">User Name:</label>
+                    <select class="form-select mb-3" id="addRoleUser" required></select>
+                    <label for="addRoleName" class="form-label">Role Name:</label>
+                    <select class="form-select mb-3" id="addRoleName" required></select>
+                    <button type="submit" class="btn btn-dark">Add Role</button>
+                  </form>
+                </div>
+              </div>
+
+              <div class="card shadow-sm mb-4">
+                <div class="card-header fw-semibold">List Roles for User</div>
+                <div class="card-body">
+                  <label for="listRolesUser" class="form-label">Select User:</label>
+                  <select class="form-select mb-3" id="listRolesUser"></select>
+                  <button type="button" class="btn btn-dark" id="getRolesBtn">Get Roles</button>
+                  <div id="userRolesResult" class="mt-3"></div>
+                </div>
+              </div>
+
+              <div class="card shadow-sm mb-4">
+                <div class="card-header fw-semibold">Remove Role from User</div>
+                <div class="card-body">
+                  <form id="removeRoleForm">
+                    <label for="removeRoleUser" class="form-label">User Name:</label>
+                    <select class="form-select mb-3" id="removeRoleUser" required></select>
+                    <label for="removeRoleName" class="form-label">Role Name:</label>
+                    <select class="form-select mb-3" id="removeRoleName" required></select>
+                    <button type="submit" class="btn btn-outline-danger">Remove Role</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="text-muted small mb-0">
+            The admin defined in your <code>.env</code> file always has the Admin role and is not listed here.
+            Only the Admin role can manage roles and accounts.
+          </p>
+        </section>
+
+        <section id="vendors-section" class="mb-5 admin-section" style="display:none;">
+          <h2 class="mb-1"><i class="bi bi-shop me-2"></i>Vendors</h2>
+          <p class="text-muted">Sellers apply from the storefront. Approve a shop to let it sell, set its commission (it applies to new orders only), and record payouts for delivered orders. Suspending a shop hides its products and stops new orders for them.</p>
+          <div id="vendorsMsg" class="mb-2" aria-live="polite"></div>
+          <div id="vendorsTable"></div>
+        </section>
+
+        <section id="coupons-section" class="mb-5 admin-section" style="display:none;">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="mb-0"><i class="bi bi-ticket-perforated me-2"></i>Coupons</h2>
+            <button type="button" class="btn btn-primary" id="newCouponBtn">
+              <i class="bi bi-plus-circle me-1"></i>New Coupon
+            </button>
+          </div>
+          <p class="text-muted">Customers type a code in the cart. The server checks the rules and works out the discount; the discounted total is what the payment gateway charges.</p>
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                  <thead class="table-dark">
+                    <tr><th>Code</th><th>Discount</th><th>Rules</th><th>Valid</th><th>Used</th><th>Status</th><th class="text-end">Actions</th></tr>
+                  </thead>
+                  <tbody id="couponTable">
+                    <tr><td colspan="7" class="text-center text-muted py-4">Loading...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="modal fade" id="couponModal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <form id="couponForm" autocomplete="off">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="couponModalTitle">New Coupon</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label for="couponCode" class="form-label fw-semibold">Code <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control text-uppercase" id="couponCode" maxlength="32" placeholder="e.g. WELCOME10" required />
+                      <div class="form-text">3-32 characters: letters, numbers, - and _. Saved in capitals. It can not be changed later.</div>
+                    </div>
+                    <div class="col-md-3">
+                      <label for="couponType" class="form-label fw-semibold">Type <span class="text-danger">*</span></label>
+                      <select class="form-select" id="couponType">
+                        <option value="percent">Percent (%)</option>
+                        <option value="fixed">Fixed amount</option>
+                      </select>
+                    </div>
+                    <div class="col-md-3">
+                      <label for="couponValue" class="form-label fw-semibold">Value <span class="text-danger">*</span></label>
+                      <input type="number" class="form-control" id="couponValue" min="0.01" step="0.01" required />
+                    </div>
+                    <div class="col-md-4">
+                      <label for="couponMinOrder" class="form-label fw-semibold">Minimum order</label>
+                      <input type="number" class="form-control" id="couponMinOrder" min="0" step="0.01" placeholder="None" />
+                    </div>
+                    <div class="col-md-4" id="couponMaxDiscountGroup">
+                      <label for="couponMaxDiscount" class="form-label fw-semibold">Maximum discount</label>
+                      <input type="number" class="form-control" id="couponMaxDiscount" min="0.01" step="0.01" placeholder="No cap" />
+                      <div class="form-text">Percent coupons only.</div>
+                    </div>
+                    <div class="col-md-4">
+                      <label for="couponUsageLimit" class="form-label fw-semibold">Usage limit</label>
+                      <input type="number" class="form-control" id="couponUsageLimit" min="1" step="1" placeholder="Unlimited" />
+                    </div>
+                    <div class="col-md-4">
+                      <label for="couponPerCustomerLimit" class="form-label fw-semibold">Per-customer limit</label>
+                      <input type="number" class="form-control" id="couponPerCustomerLimit" min="1" step="1" placeholder="Unlimited" />
+                      <div class="form-text">Uses allowed per customer email.</div>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="couponStartsAt" class="form-label fw-semibold">Starts</label>
+                      <input type="datetime-local" class="form-control" id="couponStartsAt" />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="couponEndsAt" class="form-label fw-semibold">Ends</label>
+                      <input type="datetime-local" class="form-control" id="couponEndsAt" />
+                    </div>
+                    <div class="col-12">
+                      <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="couponActive" checked />
+                        <label class="form-check-label" for="couponActive">Active (customers can use it)</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-text mt-3">The discount never takes an order below the minimum order total (MIN_ORDER_TOTAL, default 10). Times are in your browser's time zone.</div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <button type="submit" class="btn btn-primary" id="couponSaveBtn">Save Coupon</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="permissionModal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Permissions - <span id="permissionRoleName"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <table class="table table-bordered perm-matrix mb-2">
+                  <thead class="table-light">
+                    <tr><th>Sl.</th><th>Name</th><th>View</th><th>Details</th><th>Create</th><th>Edit</th><th>Delete</th></tr>
+                  </thead>
+                  <tbody id="permissionMatrixBody"></tbody>
+                </table>
+                <div class="form-text">A dash means the action doesn't exist for that item (for example, orders are created by customers at checkout).</div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-dark" id="savePermissionsBtn">Save Permissions</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <section id="stats-section" class="mb-5 admin-section">
+          <h2 class="mb-3">Statistics</h2>
+          <div class="row">
+            <div class="col-md-3">
+              <a href="#all-products-section" class="stats-link" title="View details">
+              <div class="stats-card bg-primary text-white">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <small class="opacity-75">Total Products</small>
+                    <h3 id="totalProducts">0</h3>
+                  </div>
+                  <i class="bi bi-box-seam fs-1 opacity-50"></i>
+                </div>
+              </div>
+              </a>
+            </div>
+            <div class="col-md-3">
+              <a href="#orders-section" class="stats-link" title="View details">
+              <div class="stats-card bg-success text-white">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <small class="opacity-75">Total Orders</small>
+                    <h3 id="totalOrders">0</h3>
+                  </div>
+                  <i class="bi bi-receipt fs-1 opacity-50"></i>
+                </div>
+              </div>
+              </a>
+            </div>
+            <div class="col-md-3">
+              <a href="#revenue-section" class="stats-link" title="View details">
+              <div class="stats-card bg-info text-white">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <small class="opacity-75" title="Everything customers paid on orders that are paid and not cancelled, including sellers' shares and shipping">Sales (paid, not cancelled)</small>
+                    <h3 id="totalRevenue">0</h3>
+                  </div>
+                  <i class="bi bi-cash-stack fs-1 opacity-50"></i>
+                </div>
+              </div>
+              </a>
+            </div>
+            <!-- Marketplace revenue stats (hidden when multivendor is off) -->
+            <div class="col-md-3 multivendor-stat d-none">
+              <div class="stats-card bg-primary text-white">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <small class="opacity-75">Commissions</small>
+                    <h3 id="commissionEarned">0</h3>
+                  </div>
+                  <i class="bi bi-percent fs-1 opacity-50"></i>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 multivendor-stat d-none">
+              <div class="stats-card bg-success text-white">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <small class="opacity-75" title="What the marketplace keeps: own items + commission + shipping - coupon discounts">Store Revenue (after sellers)</small>
+                    <h3 id="storeRevenue">0</h3>
+                  </div>
+                  <i class="bi bi-wallet fs-1 opacity-50"></i>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <a href="#low-stock-section" class="stats-link" title="View details">
+              <div class="stats-card bg-warning text-dark">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <small class="opacity-75">Low Stock Items</small>
+                    <h3 id="lowStockItems">0</h3>
+                  </div>
+                  <i class="bi bi-exclamation-triangle fs-1 opacity-50"></i>
+                </div>
+              </div>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section id="products-section" class="mb-5 admin-section">
+          <a href="#stats-section" class="btn btn-outline-secondary btn-sm mb-3" id="backToStatsFromProducts" style="display:none;">
+            <i class="bi bi-arrow-left me-1"></i>Back to Statistics
+          </a>
+          <h2 class="mb-4" id="productsHeading">
+            <i class="bi bi-box-seam me-2"></i><span>Product Management</span>
+            <button type="button" id="importCsvBtn" class="btn btn-outline-primary btn-sm ms-3 d-none align-middle">
+              <i class="bi bi-file-earmark-arrow-up me-1"></i>Import CSV
+            </button>
+          </h2>
+
+          <div class="card shadow-sm mb-4" id="addProductCard">
+            <div class="card-header bg-primary text-white">
+              <h5 class="mb-0"><i class="bi bi-plus-circle me-2"></i>Add New Product</h5>
+            </div>
+            <div class="card-body">
+              <form id="addProductForm" class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Product Title <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="title" placeholder="e.g., Classic Cotton T-Shirt" required />
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label fw-semibold">Price <span class="text-danger">*</span></label>
+                  <input type="number" class="form-control" id="price" placeholder="Enter price" min="0" step="0.01" required />
+                  <small class="text-muted">e.g., 1999, 3499.99</small>
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label fw-semibold">Stock Quantity <span class="text-danger">*</span></label>
+                  <input type="number" class="form-control" id="stock" placeholder="Enter quantity" min="0" required />
+                  <small class="text-muted">Number of items available</small>
+                </div>
+                <div class="col-12" id="addSizeGrid"></div>
+                <div class="col-12" id="addGallery"></div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">
+                    <i class="bi bi-image me-2"></i>Product Image
+                  </label>
+                  <div class="border rounded p-3 bg-light" style="border-style: dashed !important;">
+                    <div class="text-center mb-2">
+                      <i class="bi bi-cloud-upload fs-1 text-muted"></i>
+                    </div>
+                    <div class="d-flex gap-2 mb-2">
+                      <input type="file" class="form-control" id="imageFile" accept="image/*" />
+                      <button type="button" class="btn btn-outline-danger" id="clearImageBtn" style="display: none;" title="Remove image">
+                        <i class="bi bi-x-lg"></i>
+                      </button>
+                    </div>
+                    <small class="text-muted d-block text-center">Upload an image file (JPG, PNG, etc.)</small>
+                    <div class="text-center mt-2">
+                      <small class="text-muted">OR</small>
+                    </div>
+                    <input type="text" class="form-control mt-2" id="imageUrl" placeholder="Enter image URL (optional)" />
+                    <div id="imagePreview" class="mt-3 text-center" style="display: none;">
+                      <p class="small text-muted mb-2">Preview:</p>
+                      <img id="previewImg" src="" alt="Preview" class="img-thumbnail shadow-sm" style="max-width: 200px; max-height: 200px; object-fit: cover; border-radius: 8px;" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Category</label>
+                  <select class="form-select" id="category" required>
+                    <option value="" selected disabled>Choose a category</option>
+                    <option>Men</option><option>Women</option><option>Kids</option><option>Accessories</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label fw-semibold">Description</label>
+                  <textarea class="form-control" id="description" rows="3" placeholder="Product description..."></textarea>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary btn-lg px-5">
+                    <i class="bi bi-plus-circle me-2"></i>Add Product
+                  </button>
+                  <button type="reset" class="btn btn-outline-secondary ms-2" id="resetFormBtn">
+                    <i class="bi bi-arrow-counterclockwise me-2"></i>Reset Form
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="card shadow-sm mt-4">
+            <div class="card-header bg-secondary text-white">
+              <h5 class="mb-0"><i class="bi bi-list-ul me-2"></i>All Products</h5>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                  <thead class="table-dark">
+                    <tr>
+                      <th style="width: 80px;">Image</th>
+                      <th>Title</th>
+                      <th>Category</th>
+                      <th style="width: 120px;">Price</th>
+                      <th style="width: 100px;">Stock</th>
+                      <th style="width: 120px;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="productTable">
+                    <tr>
+                      <td colspan="6" class="text-center text-muted py-4">
+                        <div class="spinner-border text-primary" role="status">
+                          <span class="visually-hidden">Loading products...</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="orders-section" class="mb-5 admin-section">
+          <h2 class="mb-4">
+            <i class="bi bi-receipt me-2"></i>Order Management
+          </h2>
+          <div class="card shadow-sm">
+            <div class="card-header bg-info text-white">
+              <h5 class="mb-0"><i class="bi bi-list-ul me-2"></i>All Orders</h5>
+            </div>
+            <div class="card-body">
+              <div id="ordersList"></div>
+            </div>
+          </div>
+        </section>
+        <!-- Low Stock Section (opened from the Low Stock statistics card) -->
+        <section id="low-stock-section" class="mb-5 admin-section">
+          <a href="#stats-section" class="btn btn-outline-secondary btn-sm mb-3">
+            <i class="bi bi-arrow-left me-1"></i>Back to Statistics
+          </a>
+          <h2 class="mb-2"><i class="bi bi-exclamation-triangle me-2"></i>Low Stock Products</h2>
+          <p class="text-muted">Products with fewer than 5 items left in stock.</p>
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                  <thead class="table-dark">
+                    <tr><th style="width:80px;">Image</th><th>Title</th><th>Category</th><th>Price</th><th>Stock</th><th style="width:100px;">Action</th></tr>
+                  </thead>
+                  <tbody id="lowStockTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Revenue Section (opened from the Total Revenue statistics card) -->
+        <section id="revenue-section" class="mb-5 admin-section">
+          <a href="#stats-section" class="btn btn-outline-secondary btn-sm mb-3">
+            <i class="bi bi-arrow-left me-1"></i>Back to Statistics
+          </a>
+          <h2 class="mb-2"><i class="bi bi-cash-stack me-2"></i>Revenue</h2>
+          <p class="text-muted">All orders and their totals. Cancelled, unpaid (pending) and not-yet-paid Cash on Delivery orders are listed but not counted in revenue.</p>
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                  <thead class="table-dark">
+                    <tr><th>Order</th><th>Customer</th><th>Date</th><th>Status</th><th class="text-end">Total</th></tr>
+                  </thead>
+                  <tbody id="revenueTable"></tbody>
+                  <tfoot id="revenueFoot"></tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="reviews-section" class="mb-5 admin-section" style="display:none;">
+          <h2 class="mb-2"><i class="bi bi-star me-2"></i>Reviews</h2>
+          <p class="text-muted">Customer reviews, newest first. Hide a review to remove it from the store and from the rating, or delete it for good.</p>
+          <div class="form-check form-switch mb-3">
+            <input class="form-check-input" type="checkbox" id="reviewsHiddenOnly" />
+            <label class="form-check-label" for="reviewsHiddenOnly">Show hidden reviews only</label>
+          </div>
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 small">
+                  <thead class="table-dark">
+                    <tr>
+                      <th style="width: 150px;">Date</th>
+                      <th>Product</th>
+                      <th style="width: 120px;">Customer</th>
+                      <th style="width: 90px;">Rating</th>
+                      <th>Review</th>
+                      <th style="width: 150px;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="reviewsTable">
+                    <tr><td colspan="6" class="text-muted text-center py-3">Loading reviews...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="d-flex justify-content-between align-items-center mt-3" id="reviewsPager"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="audit-log-section" class="mb-5 admin-section" style="display:none;">
+          <h2 class="mb-2"><i class="bi bi-journal-text me-2"></i>Audit Log</h2>
+          <p class="text-muted">Security and system activity logs tracking all sensitive actions performed by staff.</p>
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0 small">
+                  <thead class="table-dark">
+                    <tr>
+                      <th style="width: 170px;">Timestamp</th>
+                      <th style="width: 140px;">Action</th>
+                      <th>Target</th>
+                      <th>Actor</th>
+                      <th style="width: 120px;">IP Address</th>
+                    </tr>
+                  </thead>
+                  <tbody id="auditLogTable">
+                    <tr><td colspan="5" class="text-muted text-center py-3">Loading audit logs...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Edit Product Section (opened from the Edit button in the product list) -->
+        <section id="edit-product-section" class="mb-5 admin-section">
+          <a href="#products-section" class="btn btn-outline-secondary btn-sm mb-3">
+            <i class="bi bi-arrow-left me-1"></i>Back to Products
+          </a>
+          <h2 class="mb-4"><i class="bi bi-pencil-square me-2"></i>Edit Product</h2>
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <form id="editProductForm" class="row g-3">
+                <input type="hidden" id="editId" />
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Product Title <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="editTitle" required minlength="2" />
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label fw-semibold">Price <span class="text-danger">*</span></label>
+                  <input type="number" class="form-control" id="editPrice" min="0" step="0.01" required />
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label fw-semibold">Stock <span class="text-danger">*</span></label>
+                  <input type="number" class="form-control" id="editStock" min="0" required />
+                </div>
+                <div class="col-12" id="editSizeGrid"></div>
+                <div class="col-12" id="editGallery"></div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Category</label>
+                  <select class="form-select" id="editCategory" required>
+                    <option value="" disabled>Choose a category</option>
+                    <option>Men</option><option>Women</option><option>Kids</option><option>Accessories</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">Image</label>
+                  <div class="d-flex align-items-center gap-3 mb-2">
+                    <img id="editPreviewImg" src="/img/logo.svg" alt="Current image" class="img-thumbnail" style="width:80px;height:80px;object-fit:cover;">
+                    <input type="file" class="form-control" id="editImageFile" accept="image/*" />
+                  </div>
+                  <input type="text" class="form-control" id="editImageUrl" placeholder="Or paste an image URL / path (e.g. /img/my-photo.jpg)" />
+                  <small class="text-muted">Leave both unchanged to keep the current image.</small>
+                </div>
+                <div class="col-12">
+                  <label class="form-label fw-semibold">Description</label>
+                  <textarea class="form-control" id="editDescription" rows="4"></textarea>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary px-4"><i class="bi bi-check-circle me-2"></i>Save Changes</button>
+                  <a href="#products-section" class="btn btn-outline-secondary ms-2">Cancel</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- Order Detail Section: one printable invoice-style page -->
+        <section id="order-detail-section" class="mb-5 admin-section" style="display:none;">
+          <div class="d-flex justify-content-between align-items-center mb-3 no-print">
+            <a href="#orders-section" class="btn btn-outline-secondary btn-sm" id="backToOrdersBtn">
+              <i class="bi bi-arrow-left me-1"></i>Back to Orders
+            </a>
+            <button type="button" class="btn btn-primary btn-sm" id="printOrderBtn">
+              <i class="bi bi-printer me-1"></i>Print
+            </button>
+          </div>
+          <div id="orderDetailContent">
+            <div class="text-center py-5">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading order...</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  </div>
+
+  <!-- Vendor earnings and payout (public/js/admin-extras.js) -->
+  <div class="modal fade" id="vendorModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="bi bi-wallet2 me-2"></i><span id="vendorModalName"></span></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="vendorModalMsg" class="mb-2" aria-live="polite"></div>
+          <div id="vendorModalBody"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Import products from CSV (public/js/admin-extras.js) -->
+  <div class="modal fade" id="importModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="bi bi-file-earmark-arrow-up me-2"></i>Import products from CSV</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class="small text-muted mb-2">
+            Columns: <code>title</code> (required), <code>price</code>, <code>stock</code>, <code>category</code>,
+            <code>description</code>, <code>imageUrl</code>. Up to 500 rows.
+            <a href="/admin/products/import/template" download>Download a template</a>.
+          </p>
+          <div class="row g-3 mb-3">
+            <div class="col-md-7">
+              <label class="form-label fw-semibold" for="importFile">CSV file</label>
+              <input type="file" class="form-control" id="importFile" accept=".csv,text/csv,text/plain">
+            </div>
+            <div class="col-md-5">
+              <label class="form-label fw-semibold" for="importMode">What to do</label>
+              <select class="form-select" id="importMode">
+                <option value="create">Add new products only</option>
+                <option value="update">Update existing products only</option>
+                <option value="upsert">Update existing and add new</option>
+              </select>
+            </div>
+          </div>
+          <div class="small text-muted mb-3">Existing products are matched by title (capitals do not matter). In update mode an empty cell keeps the current value.</div>
+          <div id="importMsg" class="mb-2" aria-live="polite"></div>
+          <div id="importResults"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-outline-primary" id="importPreviewBtn" disabled><i class="bi bi-eye me-1"></i>Preview</button>
+          <button type="button" class="btn btn-primary" id="importApplyBtn" disabled><i class="bi bi-check2-circle me-1"></i>Import</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Two-factor login (public/js/admin-extras.js) -->
+  <div class="modal fade" id="securityModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="bi bi-shield-lock me-2"></i>Two-factor login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="tfaMsg" class="mb-2" aria-live="polite"></div>
+
+          <div id="tfaOff" class="d-none">
+            <p>Two-factor login asks for a 6-digit code from an authenticator app (Google Authenticator, Microsoft Authenticator, Authy, 1Password...) every time you log in, so a stolen password is not enough.</p>
+            <button type="button" class="btn btn-primary" id="tfaStartBtn">Set up two-factor login</button>
+          </div>
+
+          <div id="tfaSetup" class="d-none">
+            <ol class="ps-3">
+              <li class="mb-2">In your authenticator app choose <em>Add account</em> &rarr; <em>Enter a setup key</em> and type this key:
+                <div class="my-2"><code class="fs-6 user-select-all" id="tfaSecret"></code></div>
+                <a href="#" id="tfaLink" class="small">Or tap here on a phone with an authenticator app installed</a>
+              </li>
+              <li>Type the 6-digit code the app shows:
+                <div class="input-group mt-2">
+                  <input type="text" class="form-control" id="tfaEnableCode" inputmode="numeric" maxlength="7" placeholder="123456" autocomplete="one-time-code">
+                  <button type="button" class="btn btn-success" id="tfaEnableBtn">Turn on</button>
+                </div>
+              </li>
+            </ol>
+          </div>
+
+          <div id="tfaCodes" class="d-none">
+            <div class="alert alert-warning">Save these backup codes now. Each one works once if you lose your phone. They will not be shown again.</div>
+            <pre class="border rounded p-3 bg-light user-select-all" id="tfaCodesList"></pre>
+          </div>
+
+          <div id="tfaOn" class="d-none">
+            <p class="text-success mb-1"><i class="bi bi-check-circle me-1"></i>Two-factor login is <strong>on</strong> for your account.</p>
+            <p class="small text-muted" id="tfaLeft"></p>
+            <hr>
+            <p class="fw-semibold mb-2">Turn it off</p>
+            <div class="row g-2">
+              <div class="col-sm-6"><input type="password" class="form-control" id="tfaDisablePassword" placeholder="Your password" autocomplete="current-password"></div>
+              <div class="col-sm-6"><input type="text" class="form-control" id="tfaDisableCode" placeholder="Code or backup code" autocomplete="one-time-code" maxlength="32"></div>
+            </div>
+            <button type="button" class="btn btn-outline-danger mt-2" id="tfaDisableBtn">Turn off</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/brand.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha384-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/size-grid.js"></script>
+  <script src="/js/gallery-editor.js"></script>
+  <script src="/js/admin.js"></script>
+  <script src="/js/admin-roles.js"></script>
+  <script src="/js/admin-coupons.js"></script>
+  <script src="/js/admin-extras.js"></script>
+  <script src="/js/motion-core.js" defer></script>
+  <script src="/js/motion.js" defer></script>
+</body>
+</html>

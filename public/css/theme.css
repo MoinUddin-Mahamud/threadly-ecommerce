@@ -1,0 +1,58 @@
+/* Dark mode for the storefront. The colours are the palette defined in ui2.css (--ui-*); this file
+ * defines none of its own. Everything is scoped to [data-bs-theme="dark"], so light mode is untouched. */
+
+.theme-toggle {
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+[data-bs-theme="dark"] body {
+  background-color: var(--ui-bg);
+  color: var(--ui-ink);
+}
+
+[data-bs-theme="dark"] .sidebar-card,
+[data-bs-theme="dark"] .card,
+[data-bs-theme="dark"] .card-body,
+[data-bs-theme="dark"] .category-section,
+[data-bs-theme="dark"] #cartItems .cart-row,
+[data-bs-theme="dark"] .modal-content,
+[data-bs-theme="dark"] .chat-widget-panel,
+[data-bs-theme="dark"] .chat-widget-body,
+[data-bs-theme="dark"] .chat-widget-footer,
+[data-bs-theme="dark"] .chat-widget-label span,
+[data-bs-theme="dark"] .list-group-item,
+[data-bs-theme="dark"] .dropdown-menu {
+  background: var(--ui-card);
+  color: var(--ui-ink);
+  border-color: var(--ui-line);
+}
+
+[data-bs-theme="dark"] .card-img-top { background: var(--ui-bg); }
+[data-bs-theme="dark"] .card-title,
+[data-bs-theme="dark"] .card-text,
+[data-bs-theme="dark"] h1, [data-bs-theme="dark"] h2, [data-bs-theme="dark"] h3,
+[data-bs-theme="dark"] h4, [data-bs-theme="dark"] h5, [data-bs-theme="dark"] h6 { color: var(--ui-ink); }
+
+[data-bs-theme="dark"] .form-control,
+[data-bs-theme="dark"] .form-select {
+  background-color: var(--ui-field);
+  color: var(--ui-ink);
+  border-color: var(--ui-line);
+}
+
+[data-bs-theme="dark"] .table-light,
+[data-bs-theme="dark"] .table-light > th,
+[data-bs-theme="dark"] .table-light > td {
+  --bs-table-bg: var(--ui-head);
+  --bs-table-color: var(--ui-ink);
+  color: var(--ui-ink);
+}
+
+/* Elements styled inline in index.html with light-mode colors */
+[data-bs-theme="dark"] [style*="background:white"] { background: var(--ui-card) !important; }
+[data-bs-theme="dark"] [style*="color:#555"] { color: var(--ui-muted) !important; }
+
+/* Keep dark text on light badges (e.g. size / pending badges) readable */
+[data-bs-theme="dark"] .badge.text-dark { color: var(--ui-navy) !important; }

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Oversized Hoodie - Dusty Rose">
+<title>Oversized Hoodie - Dusty Rose</title>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f9efef"/><stop offset="1" stop-color="#f4dfdf"/></linearGradient></defs>
+<rect width="400" height="500" fill="url(#bg)"/>
+<circle cx="200" cy="250" r="168" fill="#ffffff" opacity=".38"/>
+<ellipse cx="200" cy="474" rx="118" ry="11" fill="#000" opacity=".12"/>
+<g stroke="#000" stroke-opacity=".14" stroke-width="2" stroke-linejoin="round"><path d="M142 96 Q150 20 200 20 Q250 20 258 96 Q200 132 142 96 Z" fill="#a76d6d"/>
+<path d="M138 96 L96 110 L46 340 L92 352 L128 206 L128 414 Q128 422 136 422 L264 422 Q272 422 272 414 L272 206 L308 352 L354 340 L304 110 L262 96 Q200 140 138 96 Z" fill="#d68c8c"/>
+<path d="M158 98 Q200 142 242 98 Q238 54 200 50 Q162 54 158 98 Z" fill="#855757"/>
+<path d="M46 340 L92 352 L98 323 L52 311 Z M354 340 L308 352 L302 323 L348 311 Z" fill="#a76d6d"/>
+<path d="M128 398 L272 398 L272 414 Q272 422 264 422 L136 422 Q128 422 128 414 Z" fill="#a76d6d"/>
+<path d="M150 322 L250 322 L264 394 L136 394 Z" fill="#a76d6d" opacity=".7"/>
+<path d="M184 128 L182 188 M216 128 L218 188" stroke="#efd1d1" stroke-width="4" stroke-linecap="round"/></g>
+</svg>

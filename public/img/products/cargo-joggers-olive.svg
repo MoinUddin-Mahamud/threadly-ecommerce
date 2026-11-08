@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Cargo Joggers - Olive">
+<title>Cargo Joggers - Olive</title>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eaebe8"/><stop offset="1" stop-color="#d6d7d1"/></linearGradient></defs>
+<rect width="400" height="500" fill="url(#bg)"/>
+<circle cx="200" cy="250" r="168" fill="#ffffff" opacity=".38"/>
+<ellipse cx="200" cy="474" rx="118" ry="11" fill="#000" opacity=".12"/>
+<g stroke="#000" stroke-opacity=".14" stroke-width="2" stroke-linejoin="round"><path d="M128 70 L272 70 L292 372 L264 440 L214 440 L200 190 L186 440 L136 440 L108 372 Z" fill="#6b705c"/>
+<path d="M128 70 L272 70 L272 100 L128 100 Z" fill="#515546"/>
+<path d="M136 418 L186 418 L186 444 L136 444 Z M214 418 L264 418 L264 444 L214 444 Z" fill="#515546"/>
+<path d="M186 100 L184 150 M214 100 L216 150" stroke="#c4c6be" stroke-width="4" stroke-linecap="round"/>
+<path d="M200 100 L200 190" stroke="#515546" stroke-width="2.5" opacity=".5"/>
+<path d="M130 130 Q142 190 160 200 M270 130 Q258 190 240 200" stroke="#515546" stroke-width="2.5" fill="none" opacity=".5"/></g>
+</svg>

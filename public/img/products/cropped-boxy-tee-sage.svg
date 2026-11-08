@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Cropped Boxy Tee - Sage">
+<title>Cropped Boxy Tee - Sage</title>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2f4ef"/><stop offset="1" stop-color="#e5e9de"/></linearGradient></defs>
+<rect width="400" height="500" fill="url(#bg)"/>
+<circle cx="200" cy="250" r="168" fill="#ffffff" opacity=".38"/>
+<ellipse cx="200" cy="474" rx="118" ry="11" fill="#000" opacity=".12"/>
+<g stroke="#000" stroke-opacity=".14" stroke-width="2" stroke-linejoin="round"><path d="M138 92 L92 112 L52 182 L98 208 L124 176 L124 410 Q124 418 132 418 L268 418 Q276 418 276 410 L276 176 L302 208 L348 182 L308 112 L262 92 Q200 128 138 92 Z" fill="#a3b18a"/>
+<path d="M138 92 Q200 128 262 92 L254 90 Q200 116 146 90 Z" fill="#7f8a6c"/>
+<path d="M124 176 L134 106 M276 176 L266 106" stroke="#7f8a6c" stroke-width="3" opacity=".35" fill="none"/>
+<path d="M124 398 L276 398" stroke="#7f8a6c" stroke-width="3" opacity=".35"/></g>
+</svg>

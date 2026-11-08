@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Knit Crew Sweater - Burgundy">
+<title>Knit Crew Sweater - Burgundy</title>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ece2e3"/><stop offset="1" stop-color="#dac4c8"/></linearGradient></defs>
+<rect width="400" height="500" fill="url(#bg)"/>
+<circle cx="200" cy="250" r="168" fill="#ffffff" opacity=".38"/>
+<ellipse cx="200" cy="474" rx="118" ry="11" fill="#000" opacity=".12"/>
+<g stroke="#000" stroke-opacity=".14" stroke-width="2" stroke-linejoin="round"><path d="M138 92 L96 106 L46 340 L92 352 L128 206 L128 414 Q128 422 136 422 L264 422 Q272 422 272 414 L272 206 L308 352 L354 340 L304 106 L262 92 Q200 128 138 92 Z" fill="#7a2e3a"/>
+<path d="M46 340 L92 352 L98 323 L52 311 Z M354 340 L308 352 L302 323 L348 311 Z" fill="#62252e"/>
+<path d="M128 394 L272 394 L272 414 Q272 422 264 422 L136 422 Q128 422 128 414 Z" fill="#62252e"/>
+<path d="M146 92 Q200 136 254 92 L260 100 Q200 150 140 100 Z" fill="#62252e"/>
+<path d="M170 170 L170 380 M200 176 L200 384 M230 170 L230 380" stroke="#62252e" stroke-width="2" opacity=".25"/></g>
+</svg>

@@ -1,0 +1,197 @@
+/* Storefront UI 2.0: design-system layer. Loaded LAST, so it only restyles
+ * existing markup (no ids, classes or scripts are changed).
+ * Tokens, components, then motion. System font stacks only (no font files). */
+/* THE PALETTE. Every colour on every page comes from the --ui-* values below, in light and dark mode.
+ * theme.css, payment.css and marketplace.css only use these values; they define none of their own. */
+:root {
+  --ui-navy: #0f1f3d; --ui-navy-2: #17305c; --ui-gold: #e0a92e; --ui-gold-2: #f6d365;
+  --ui-gold-ink: #7a5600;            /* gold used as TEXT on a light background (AA) */
+  --ui-gold-deep: #5e4300; --ui-navy-deep: #091428;
+  --ui-ink: #14213d; --ui-bg: #f6f7fb; --ui-card: #fff; --ui-muted: #55607a;
+  --ui-on-navy: #c3cde0;            /* text on navy panels and the footer */
+  --ui-sand: #eef1f8;                /* quiet panels inside a card */
+  --ui-field: #fff;                  /* form fields */
+  --ui-head: #e8edf7;                /* table headers */
+  --ui-ok: #1d7a57; --ui-bad: #b3263a; --ui-on-ok: #fff; --ui-on-bad: #fff;   /* success and failure, used with an icon and words, never alone */
+  --ui-line: rgba(15, 31, 61, .12); --ui-r: 16px; --ui-r-sm: 10px;
+  --ui-sh-1: 0 1px 2px rgba(15,31,61,.06), 0 4px 14px rgba(15,31,61,.06);
+  --ui-sh-2: 0 10px 30px rgba(15,31,61,.16);
+  --ui-ease: cubic-bezier(.22, .8, .24, 1);
+  --ui-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Noto Sans Bengali", "Noto Sans Arabic", "Noto Sans Devanagari", Arial, sans-serif;
+  --ui-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  /* the marketplace names are aliases of the palette above */
+  --mk-ink: var(--ui-navy); --mk-ink-2: var(--ui-navy-2); --mk-accent: var(--ui-gold-ink); --mk-accent-dark: var(--ui-gold-deep);
+  --mk-cream: var(--ui-bg); --mk-sand: var(--ui-sand); --mk-card: var(--ui-card); --mk-text: var(--ui-ink);
+  --mk-muted: var(--ui-muted); --mk-line: var(--ui-line); --mk-radius: var(--ui-r);
+  /* Bootstrap follows the same palette */
+  --bs-body-color: var(--ui-ink); --bs-body-bg: var(--ui-bg); --bs-secondary-color: var(--ui-muted);
+  --bs-border-color: var(--ui-line); --bs-code-color: var(--ui-bad); --bs-emphasis-color: var(--ui-ink); --bs-tertiary-bg: var(--ui-sand);
+}
+[data-bs-theme="dark"] {
+  --ui-bg: #0b1220; --ui-card: #131c2e; --ui-ink: #e8edf7; --ui-muted: #a9b5cb; --ui-sand: #1a2742; --ui-field: #0b1220;
+  --ui-head: #1b2a47; --ui-line: rgba(255,255,255,.14); --ui-gold-ink: #f0c25a; --ui-ok: #4cc79a; --ui-bad: #ff8a95; --ui-on-ok: #0b1220; --ui-on-bad: #0b1220;
+  --ui-sh-1: 0 1px 2px rgba(0,0,0,.4), 0 4px 14px rgba(0,0,0,.35); --ui-sh-2: 0 10px 30px rgba(0,0,0,.5);
+}
+html { scroll-behavior: smooth; }
+body { font-family: var(--ui-sans); background: var(--ui-bg); color: var(--ui-ink); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, .mk-hero-title, .section-title { font-family: var(--ui-serif); letter-spacing: -.01em; }
+:focus-visible { outline: 3px solid var(--ui-gold); outline-offset: 2px; border-radius: 6px; }
+
+/* Navbar: navy glass bar with gold underline, shrinks on scroll */
+.navbar { background: linear-gradient(90deg, var(--ui-navy), var(--ui-navy-2)) !important; border-bottom: 2px solid var(--ui-gold);
+  backdrop-filter: blur(10px); transition: padding .3s var(--ui-ease), box-shadow .3s; }
+.navbar.ui-scrolled { padding-block: .25rem; box-shadow: var(--ui-sh-2); }
+.navbar-brand { font-weight: 700; letter-spacing: .02em; color: var(--ui-gold-2) !important; }
+.navbar .nav-link { color: rgba(255,255,255,.88) !important; border-radius: 999px; padding: .45rem .9rem !important; position: relative; transition: background .2s, color .2s; }
+.navbar .nav-link:hover, .navbar .nav-link.active { background: rgba(224,169,46,.16); color: var(--ui-gold-2) !important; }
+.nav-count { background: var(--ui-gold) !important; color: var(--ui-navy) !important; font-weight: 700; }
+.nav-count.ui-bump { animation: ui-bump .45s var(--ui-ease); }
+
+.mk-hero, .hero-section { background: radial-gradient(1200px 500px at 85% -10%, rgba(224,169,46,.22), transparent 60%), linear-gradient(135deg, var(--ui-navy), var(--ui-navy-2)) !important; color: #fff; position: relative; overflow: hidden; }
+.mk-hero-title { color: #fff; font-weight: 700; }
+.mk-hero-title em, .text-gradient, .golden-accent { background: linear-gradient(90deg, var(--ui-gold), var(--ui-gold-2)); -webkit-background-clip: text; background-clip: text; color: transparent; font-style: normal; }
+.mk-hero-art, .hero-image-placeholder { border-radius: 22px; box-shadow: var(--ui-sh-2); animation: ui-float 7s ease-in-out infinite; }
+.mk-eyebrow { color: var(--ui-gold-ink); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: .78rem; }
+.mk-eyebrow-light { color: var(--ui-gold-2); }
+
+/* Buttons: gold primary (navy text = AA), outline, press + ripple */
+.btn { border-radius: 999px; font-weight: 600; position: relative; overflow: hidden; transition: transform .18s var(--ui-ease), box-shadow .2s, background-position .4s; }
+.btn:active { transform: scale(.97); }
+.btn-primary, .btn-accent { --bs-btn-color: var(--ui-navy); --bs-btn-hover-color: var(--ui-navy); --bs-btn-active-color: var(--ui-navy); --bs-btn-border-color: transparent;
+  background: linear-gradient(135deg, var(--ui-gold), var(--ui-gold-2)) !important; color: var(--ui-navy) !important; border: 0 !important; box-shadow: 0 4px 14px rgba(224,169,46,.35); }
+.btn-primary:hover, .btn-accent:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(224,169,46,.5); }
+.btn-outline-primary, .btn-outline-ink, .btn-outline-secondary { border-width: 2px; --bs-btn-color: var(--ui-navy); --bs-btn-border-color: var(--ui-navy); --bs-btn-hover-bg: var(--ui-navy); --bs-btn-hover-color: #fff; --bs-btn-hover-border-color: var(--ui-navy); }
+[data-bs-theme="dark"] .btn-outline-primary, [data-bs-theme="dark"] .btn-outline-ink, [data-bs-theme="dark"] .btn-outline-secondary { --bs-btn-color: var(--ui-gold-2); --bs-btn-border-color: var(--ui-gold-2); --bs-btn-hover-bg: var(--ui-gold); --bs-btn-hover-color: var(--ui-navy); }
+.btn-ink { background: var(--ui-navy); color: #fff; }
+.ui-ripple { position: absolute; border-radius: 50%; background: rgba(255,255,255,.55); transform: scale(0); animation: ui-ripple .6s linear; pointer-events: none; }
+
+.card, .mk-tile, .mk-step, .sidebar-card { background: var(--ui-card); border: 1px solid var(--ui-line) !important; border-radius: var(--ui-r) !important; box-shadow: var(--ui-sh-1); transition: transform .3s var(--ui-ease), box-shadow .3s; overflow: hidden; }
+.card:hover, .mk-tile:hover { transform: translateY(-6px); box-shadow: var(--ui-sh-2); }
+.card-img-top { transition: transform .6s var(--ui-ease); }
+.card:hover .card-img-top { transform: scale(1.06); }
+.card-title { font-weight: 700; color: var(--ui-ink); }
+.price-tag { color: var(--ui-gold-ink); font-weight: 800; font-size: 1.25rem; }
+.category-badge { background: var(--ui-navy) !important; color: #fff !important; border-radius: 999px; font-weight: 600; }
+.stock-badge { border-radius: 999px; font-weight: 700; letter-spacing: .04em; }
+.stock-badge.ui-flash { animation: ui-flash .9s var(--ui-ease); }
+.wishlist-heart { transition: transform .25s var(--ui-ease); } .wishlist-heart:hover { transform: scale(1.2); }
+
+.form-control, .form-select { border-radius: var(--ui-r-sm); border: 1.5px solid var(--ui-line); padding: .65rem .9rem; background-color: var(--ui-card); color: var(--ui-ink); transition: border-color .2s, box-shadow .2s; }
+.form-control:focus, .form-select:focus { border-color: var(--ui-gold); box-shadow: 0 0 0 4px rgba(224,169,46,.25); }
+.form-label { font-weight: 600; font-size: .9rem; color: var(--ui-ink); }
+.input-group-text { background: var(--ui-bg); border-color: var(--ui-line); }
+
+/* Modals + cart drawer (same #cartModal, same form ids) */
+.modal-content { border: 0; border-radius: 20px; box-shadow: var(--ui-sh-2); overflow: hidden; background: var(--ui-card); color: var(--ui-ink); }
+.modal-header { background: linear-gradient(135deg, var(--ui-navy), var(--ui-navy-2)); color: #fff; border-bottom: 2px solid var(--ui-gold); }
+.modal-header .modal-title { color: var(--ui-gold-2) !important; }
+
+/* Login / sign-up modal */
+.tl-auth-modal { border: 1px solid rgba(224, 169, 46, .3); }
+.nav-tabs .nav-link.tl-auth-tab { background: transparent; border: none; border-bottom: 3px solid transparent; }
+.nav-tabs .nav-link.tl-auth-tab.active { background: transparent; border-bottom-color: var(--ui-gold); }
+.btn-tl-gold { background: linear-gradient(135deg, var(--ui-gold) 0%, var(--ui-gold-2) 100%); color: var(--ui-navy); border: 0; }
+.btn-tl-gold:hover, .btn-tl-gold:focus-visible { background: linear-gradient(135deg, var(--ui-gold-2) 0%, var(--ui-gold) 100%); color: var(--ui-navy); }
+.tl-link-gold { color: var(--ui-gold-ink); }
+.tl-link-gold:hover { color: var(--ui-gold-ink); text-decoration: underline !important; }
+.modal.fade .modal-dialog { transform: translateY(24px) scale(.97); transition: transform .35s var(--ui-ease), opacity .3s; }
+.modal.show .modal-dialog { transform: none; }
+#cartModal .modal-dialog { margin: 0 0 0 auto; max-width: min(520px, 100%); min-height: 100%; transform: translateX(100%); }
+#cartModal.show .modal-dialog { transform: none; }
+#cartModal .modal-content { min-height: 100vh; border-radius: 22px 0 0 22px; }
+#cartItems .cart-row { border-radius: var(--ui-r-sm); border: 1px solid var(--ui-line); transition: background .2s, transform .2s; }
+#cartItems .cart-row:hover { transform: translateX(-3px); }
+
+.mk-footer, .footer { background: linear-gradient(180deg, var(--ui-navy), var(--ui-navy-deep)) !important; color: rgba(255,255,255,.78); border-top: 3px solid var(--ui-gold); }
+.mk-footer a { color: rgba(255,255,255,.82); transition: color .2s, padding-left .2s; } .mk-footer a:hover { color: var(--ui-gold-2); padding-left: 4px; }
+.chat-widget-toggle { box-shadow: 0 0 0 0 rgba(224,169,46,.6); animation: ui-pulse 2.6s infinite; }
+.chat-widget-panel { border-radius: 20px; box-shadow: var(--ui-sh-2); animation: ui-pop .35s var(--ui-ease); }
+.chat-widget-header { background: linear-gradient(135deg, var(--ui-navy), var(--ui-navy-2)); color: var(--ui-gold-2); }
+.chat-msg-user { background: linear-gradient(135deg, var(--ui-gold), var(--ui-gold-2)); color: var(--ui-navy); }
+
+.loading-spinner { border-color: var(--ui-line); border-top-color: var(--ui-gold); }
+.ui-skeleton { background: linear-gradient(90deg, rgba(128,128,128,.12) 25%, rgba(128,128,128,.24) 50%, rgba(128,128,128,.12) 75%); background-size: 200% 100%; animation: ui-shimmer 1.4s infinite; border-radius: var(--ui-r-sm); min-height: 1rem; }
+
+/* Scroll reveal (added by motion.js, never hides content without JS) */
+.ui-reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s var(--ui-ease), transform .7s var(--ui-ease); transition-delay: var(--ui-d, 0ms); }
+.ui-reveal.ui-in { opacity: 1; transform: none; }
+.animate-fade-in { animation: ui-fade .8s var(--ui-ease) both; }
+
+@keyframes ui-fade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes ui-float { 50% { transform: translateY(-10px); } }
+@keyframes ui-bump { 40% { transform: scale(1.5); } }
+@keyframes ui-ripple { to { transform: scale(4); opacity: 0; } }
+@keyframes ui-flash { 0% { box-shadow: 0 0 0 0 rgba(25,135,84,.7); } 100% { box-shadow: 0 0 0 14px rgba(25,135,84,0); } }
+@keyframes ui-pulse { 70% { box-shadow: 0 0 0 16px rgba(224,169,46,0); } 100% { box-shadow: 0 0 0 0 rgba(224,169,46,0); } }
+@keyframes ui-pop { from { opacity: 0; transform: translateY(16px) scale(.96); } }
+@keyframes ui-shimmer { to { background-position: -200% 0; } }
+
+/* Cart drawer in right-to-left, and reduced motion */
+[dir="rtl"] #cartModal .modal-dialog { margin: 0 auto 0 0; transform: translateX(-100%); }
+[dir="rtl"] #cartModal.show .modal-dialog { transform: none; }
+@media (max-width: 575.98px) { #cartModal .modal-content { border-radius: 0; } .card:hover { transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  .ui-reveal { opacity: 1; transform: none; }
+}
+
+#cartModal[data-step="1"] #checkoutForm { display: none; }
+#cartModal[data-step="2"] .ui-steps-bar { display: none; }
+.ui-steps-bar { padding-top: .75rem; border-top: 1px solid var(--ui-line); margin-top: .75rem; }
+#cartModal[data-step="2"] #checkoutForm { animation: ui-fade .4s var(--ui-ease) both; }
+
+/* Right-to-left: Bootstrap's own RTL build is loaded for Arabic (see i18n.js); only project rules are here. */
+[dir="rtl"] .form-select { padding-left: 2.25rem; padding-right: .9rem; }
+[dir="rtl"] .bi-arrow-right, [dir="rtl"] .bi-arrow-left, [dir="rtl"] .bi-chevron-right, [dir="rtl"] .bi-chevron-left { transform: scaleX(-1); }
+[dir="rtl"] .mk-footer a:hover { padding-left: 0; padding-right: 4px; }
+[dir="rtl"] input[type="email"], [dir="rtl"] input[type="tel"], [dir="rtl"] input[type="url"] { direction: ltr; text-align: right; }
+
+/* Dark surfaces: the light-surface accent (dark gold, passes AA on white) is too dim on navy, so use the light gold there. */
+.mk-hero, .mk-tile, .mk-footer, .footer, .navbar, .modal-header, .chat-widget-header { --mk-accent: var(--ui-gold-2); --ui-gold-ink: var(--ui-gold-2); }
+.mk-hero, .mk-hero p, .mk-hero li, .mk-hero span, .mk-hero small { color: rgba(255,255,255,.86); }
+.mk-hero .mk-hero-title, .mk-hero h1, .mk-hero h2 { color: #fff; }
+.mk-hero .mk-eyebrow { color: var(--ui-gold-2); }
+.mk-hero .btn *, .mk-tile .btn * { color: inherit; }
+.mk-tile, .mk-tile h3, .mk-tile h4, .mk-tile span { color: #fff; }
+.mk-tile .bi { color: var(--ui-gold-2); }
+#uiLang { width: auto; min-width: 7.5rem; background-color: rgba(255,255,255,.1); color: #fff; border-color: rgba(255,255,255,.35); border-radius: 999px; padding-block: .3rem; }
+#uiLang option { color: #14213d; background: #fff; }
+
+/* The outlined hero button sits on the dark hero, so it is light there (it was dark on dark). */
+.mk-hero .btn-outline-ink { --bs-btn-color: #fff; --bs-btn-border-color: rgba(255,255,255,.75); --bs-btn-hover-color: var(--ui-navy); --bs-btn-hover-bg: #fff; --bs-btn-hover-border-color: #fff; --bs-btn-active-color: var(--ui-navy); --bs-btn-active-bg: #fff; --bs-btn-active-border-color: #fff; }
+
+/* Half star in the product rating: the left half is gold, the right half is empty. */
+.tl-star-half { background: linear-gradient(90deg, var(--ui-gold) 50%, rgba(224, 169, 46, .3) 50%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
+
+/* Very narrow phones: a navbar that never collapses (seller and admin pages) stays inside the screen */
+@media (max-width: 400px) {
+  .navbar-expand .navbar-nav .nav-link { padding-inline: .5rem !important; }
+  .navbar-expand .navbar-brand { margin-inline-end: .5rem; }
+  .navbar-expand .navbar-brand .brand-name { font-size: 1.15rem; }
+  .navbar-expand #uiLang { min-width: 0; width: 5.5rem; padding-inline: .4rem; }
+}
+
+/* Breadcrumb links read well on the page background in both modes */
+.breadcrumb a { color: var(--ui-gold-ink); }
+
+/* Primary areas are navy on every page (the admin pages included); text on a gold badge is navy (white on gold fails AA); the input-group addons follow the palette */
+.bg-primary { background: var(--ui-navy) !important; background-image: none !important; color: #fff; }
+.badge.bg-warning { color: var(--ui-navy) !important; }
+.input-group-text { background: var(--ui-sand); color: var(--ui-ink); border-color: var(--ui-line); }
+
+/* Info notices and the info badge (cart price notice, size tag) use the palette instead of Bootstrap's cyan */
+.alert-info { --bs-alert-color: var(--ui-ink); --bs-alert-bg: var(--ui-sand); --bs-alert-border-color: var(--ui-line); }
+.badge.bg-info, .badge.text-bg-info { background-color: var(--ui-navy-2) !important; color: #fff !important; }
+
+/* Dark mode: the size tag is gold with navy text (the shared dark rule for light badges would make it navy on navy) */
+[data-bs-theme="dark"] .badge.bg-info, [data-bs-theme="dark"] .badge.text-bg-info { background-color: var(--ui-gold) !important; color: var(--ui-navy) !important; }
+
+/* Tabs and pills (seller and admin dashboards) */
+.nav-tabs, .nav-pills { --bs-nav-link-color: var(--ui-ink); --bs-nav-link-hover-color: var(--ui-gold-ink); }
+.nav-tabs .nav-link.active, .nav-pills .nav-link.active { --bs-nav-tabs-link-active-color: var(--ui-ink); }
+
+/* Buttons placed inside a heading keep the body font */
+h1 .btn, h2 .btn, h3 .btn, h4 .btn, h5 .btn, h6 .btn { font-family: var(--ui-sans); }
+
+/* The page-level bottom margin of .container-fluid must not apply to the container inside a navbar */
+.navbar > .container-fluid { margin-bottom: 0; }

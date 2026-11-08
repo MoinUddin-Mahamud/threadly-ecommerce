@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Handloom Panjabi - Maroon">
+<title>Handloom Panjabi - Maroon</title>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ede2e3"/><stop offset="1" stop-color="#dac4c6"/></linearGradient></defs>
+<rect width="400" height="500" fill="url(#bg)"/>
+<circle cx="200" cy="250" r="168" fill="#ffffff" opacity=".38"/>
+<ellipse cx="200" cy="474" rx="118" ry="11" fill="#000" opacity=".12"/>
+<g stroke="#000" stroke-opacity=".14" stroke-width="2" stroke-linejoin="round"><path d="M146 82 L98 100 L50 286 L96 298 L128 196 L128 452 Q128 460 136 460 L264 460 Q272 460 272 452 L272 196 L304 298 L350 286 L302 100 L254 82 Q200 116 146 82 Z" fill="#7b2d35"/>
+<path d="M150 84 Q200 120 250 84 L256 94 Q200 134 144 94 Z" fill="#62242a"/>
+<path d="M200 118 L200 262" stroke="#b68c90" stroke-width="10" opacity=".55"/>
+<g fill="#62242a"><circle cx="200" cy="146" r="4.5"/><circle cx="200" cy="184" r="4.5"/><circle cx="200" cy="222" r="4.5"/></g>
+<g fill="#b68c90" opacity=".7"><path d="M200 270 l7 9 l-7 9 l-7 -9 Z M200 296 l5 6 l-5 6 l-5 -6 Z"/></g>
+<path d="M128 446 L272 446" stroke="#b68c90" stroke-width="5" opacity=".5" stroke-dasharray="2 9" stroke-linecap="round"/>
+<path d="M60 270 L96 280 M340 270 L304 280" stroke="#b68c90" stroke-width="4" opacity=".45" stroke-dasharray="2 8" stroke-linecap="round"/></g>
+</svg>

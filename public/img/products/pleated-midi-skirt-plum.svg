@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Pleated Midi Skirt - Plum">
+<title>Pleated Midi Skirt - Plum</title>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ebe4eb"/><stop offset="1" stop-color="#d6c8d6"/></linearGradient></defs>
+<rect width="400" height="500" fill="url(#bg)"/>
+<circle cx="200" cy="250" r="168" fill="#ffffff" opacity=".38"/>
+<ellipse cx="200" cy="474" rx="118" ry="11" fill="#000" opacity=".12"/>
+<g stroke="#000" stroke-opacity=".14" stroke-width="2" stroke-linejoin="round"><path d="M150 118 L250 118 L320 424 L80 424 Z" fill="#6d3b6e"/>
+<path d="M148 110 L252 110 L254 140 L146 140 Z" fill="#572f58"/>
+<path d="M170 140 L128 424 M190 140 L168 424 M210 140 L232 424 M230 140 L272 424 M200 140 L200 424" stroke="#572f58" stroke-width="2.5" opacity=".3" fill="none"/>
+<path d="M86 408 L314 408" stroke="#572f58" stroke-width="3" opacity=".3"/></g>
+</svg>

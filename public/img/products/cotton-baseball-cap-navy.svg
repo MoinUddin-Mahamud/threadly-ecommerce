@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Cotton Baseball Cap - Navy">
+<title>Cotton Baseball Cap - Navy</title>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e1e4ea"/><stop offset="1" stop-color="#c4c9d6"/></linearGradient></defs>
+<rect width="400" height="500" fill="url(#bg)"/>
+<circle cx="200" cy="250" r="168" fill="#ffffff" opacity=".38"/>
+<ellipse cx="200" cy="474" rx="118" ry="11" fill="#000" opacity=".12"/>
+<g stroke="#000" stroke-opacity=".14" stroke-width="2" stroke-linejoin="round"><path d="M96 300 Q92 150 200 146 Q308 150 304 300 Z" fill="#2c3e6b"/>
+<path d="M200 150 L200 300 M150 170 Q140 240 146 300 M250 170 Q260 240 254 300" stroke="#212f51" stroke-width="2.5" stroke-opacity="1" opacity=".4" fill="none"/>
+<path d="M88 300 L312 300 Q372 304 386 342 Q330 364 190 346 Q110 338 88 300 Z" fill="#212f51"/>
+<path d="M96 300 L304 300 L304 314 L96 314 Z" fill="#808ba6" opacity=".35"/>
+<circle cx="200" cy="148" r="9" fill="#212f51"/></g>
+</svg>

@@ -1,0 +1,64 @@
+THREADLY - LICENSE
+
+This item is licensed, not sold. The author keeps ownership of the item and
+its code. By purchasing it on Codester you receive a Regular or Extended
+License as defined by Codester. The summary below follows those terms; if
+anything here differs from Codester's own license terms
+(https://www.codester.com/info/licenses/), Codester's terms apply.
+
+--------------------------------------------------------------------------
+REGULAR LICENSE
+--------------------------------------------------------------------------
+- Use the item in ONE project, for personal or commercial use, by you or on
+  behalf of one client.
+- Author's note (it does not change Codester's terms): development, testing,
+  staging and production copies of that same project count as one project.
+- You may NOT offer the item for resale, on its own or as part of a larger
+  project, and you may NOT distribute the source files.
+- To use the item in another project, buy another Regular License or choose
+  the Extended License.
+
+--------------------------------------------------------------------------
+EXTENDED LICENSE
+--------------------------------------------------------------------------
+- Use the item in UNLIMITED projects, for personal or commercial use, by you
+  or on behalf of clients.
+- You may offer the item for resale, and distribute or sublicense the source
+  files, as part of a larger project.
+- You may NOT resell the item on its own or as-is.
+
+--------------------------------------------------------------------------
+WHAT IS INCLUDED
+--------------------------------------------------------------------------
+- The original application code, documentation and tests in this package.
+- The logo, hero image and the demo product illustrations in public/img/ were
+  created for this item and are covered by the same license as the code. They
+  are demo artwork: replace them with your own branding and product
+  photography before running a live store.
+- No photographs or other third-party images are bundled.
+
+--------------------------------------------------------------------------
+NOT INCLUDED / THIRD-PARTY NOTICES
+--------------------------------------------------------------------------
+- Third-party open-source packages listed in package.json remain under their
+  own licenses (MIT, Apache 2.0, etc., as applicable).
+- Bootstrap, Bootstrap Icons, jQuery and Socket.IO are loaded from public CDNs
+  or from npm under their own licenses.
+- Every outside service the item can connect to needs your own account, under
+  that service's own terms of service. No accounts, API keys or API access are
+  provided with this purchase. The services are:
+    - Payment gateways: SSLCommerz, Stripe, PayPal, Flutterwave and Mollie.
+    - E-mail: an SMTP provider of your choice.
+    - AI chatbot: Google Gemini, OpenAI, Anthropic, or any OpenAI-compatible
+      service.
+
+--------------------------------------------------------------------------
+NO WARRANTY
+--------------------------------------------------------------------------
+This software is provided "as is", without warranty of any kind, express or
+implied. The author is not liable for any damages arising from its use.
+
+--------------------------------------------------------------------------
+Author: Moin Uddin Mahamud
+Product: Threadly - Real-Time E-Commerce Platform with AI Chatbot
+Description: A real-time, self-hosted e-commerce platform and multi-vendor clothing marketplace with an AI chatbot, built with Node.js, Express and MongoDB.

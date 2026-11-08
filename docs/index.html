@@ -1,0 +1,1719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Threadly - Real-Time E-Commerce Platform with AI Chatbot - Documentation</title>
+<style>
+:root { --bg:#fff; --fg:#1d2433; --muted:#5b6475; --line:#dde1ea; --soft:#f4f6fa; --accent:#1f4aa8; --code:#eef1f7; color-scheme: light dark; }
+@media (prefers-color-scheme: dark) { :root { --bg:#12161f; --fg:#e6e9f0; --muted:#98a1b3; --line:#2a3142; --soft:#1a2030; --accent:#8fb3ff; --code:#1d2436; } }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+.layout { display:flex; align-items:flex-start; max-width:1280px; margin:0 auto; }
+nav.toc { position:sticky; top:0; flex:0 0 300px; max-height:100vh; overflow:auto; padding:24px 16px 40px 24px; border-right:1px solid var(--line); font-size:14px; }
+nav.toc strong { display:block; margin-bottom:10px; font-size:13px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+nav.toc ul { list-style:none; margin:0; padding:0; }
+nav.toc ul ul { margin:2px 0 6px 12px; }
+nav.toc a { display:block; padding:3px 0; color:var(--fg); text-decoration:none; }
+nav.toc a:hover { color:var(--accent); }
+main { flex:1; min-width:0; padding:32px 32px 80px; max-width:900px; }
+h1 { font-size:2rem; line-height:1.25; margin:0 0 .5em; }
+h2 { margin:2.2em 0 .6em; padding-top:.4em; border-top:1px solid var(--line); font-size:1.5rem; }
+h3 { margin:1.8em 0 .5em; font-size:1.2rem; }
+h4 { margin:1.4em 0 .4em; }
+a { color:var(--accent); }
+code { background:var(--code); padding:.12em .35em; border-radius:4px; font:.9em ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; overflow-wrap:anywhere; }
+pre { background:var(--code); padding:14px 16px; border-radius:8px; overflow:auto; line-height:1.45; }
+pre code { background:none; padding:0; overflow-wrap:normal; }
+blockquote { margin:1em 0; padding:.2em 1em; border-left:4px solid var(--line); background:var(--soft); color:var(--muted); }
+.table-wrap { overflow-x:auto; margin:1em 0; }
+table { border-collapse:collapse; width:100%; font-size:.95em; }
+th, td { border:1px solid var(--line); padding:6px 10px; text-align:left; vertical-align:top; }
+th { background:var(--soft); }
+td:first-child code { white-space:nowrap; overflow-wrap:normal; }
+hr { border:0; border-top:1px solid var(--line); margin:2em 0; }
+hr + h2 { border-top:0; margin-top:1em; }
+details.toc-mobile { display:none; margin:0 0 24px; padding:10px 14px; border:1px solid var(--line); border-radius:8px; background:var(--soft); }
+details.toc-mobile ul { list-style:none; padding-left:12px; margin:.4em 0; }
+@media (max-width: 900px) { nav.toc { display:none; } details.toc-mobile { display:block; } main { padding:20px 16px 60px; } }
+@media print { nav.toc, details.toc-mobile { display:none; } main { max-width:none; padding:0; } }
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="toc" aria-label="Contents"><strong>Contents</strong><ul><li><a href="#quick-start-try-it-on-your-computer-in-5-minutes">Quick start (try it on your computer in 5 minutes)</a></li><li><a href="#features">Features</a></li><li><a href="#tech-stack">Tech Stack</a></li><li><a href="#requirements">Requirements</a></li><li><a href="#installation">Installation</a></li><li><a href="#run-with-docker-one-command">Run with Docker (one command)</a></li><li><a href="#running-the-tests">Running the tests</a></li><li><a href="#roles--access-admin-accounts-and-permissions">Roles &amp; Access (admin accounts and permissions)</a></li><li><a href="#coupons">Coupons</a></li><li><a href="#cash-on-delivery-optional">Cash on Delivery (optional)</a></li><li><a href="#wishlist">Wishlist</a></li><li><a href="#csv-product-import-admin">CSV product import (admin)</a></li><li><a href="#sizes-and-product-pictures">Sizes and product pictures</a></li><li><a href="#shipping-rates-optional">Shipping rates (optional)</a></li><li><a href="#two-factor-admin-login-optional">Two-factor admin login (optional)</a></li><li><a href="#currency">Currency</a></li><li><a href="#marketplace-multi-vendor">Marketplace (multi-vendor)</a></li><li><a href="#reviews">Reviews</a></li><li><a href="#installable-store-pwa">Installable store (PWA)</a></li><li><a href="#dark-mode">Dark mode</a></li><li><a href="#environment-variables">Environment Variables</a><ul><li><a href="#more-international-gateways-paypal-flutterwave-mollie-optional">More international gateways: PayPal, Flutterwave, Mollie (optional)</a></li></ul></li><li><a href="#policy-pages-before-you-launch">Policy pages (before you launch)</a></li><li><a href="#payments-that-need-a-person-to-look-at-them">Payments that need a person to look at them</a></li><li><a href="#seo-search-engines-and-link-previews">SEO (search engines and link previews)</a></li><li><a href="#project-structure">Project Structure</a></li><li><a href="#tested-and-untested">Tested and untested</a></li><li><a href="#limits-to-know-before-you-launch">Limits to know before you launch</a></li><li><a href="#security-notes">Security Notes</a></li><li><a href="#optional-money-rules">Optional money rules</a></li><li><a href="#languages-first-run-setup-and-demo-mode">Languages, first-run setup and demo mode</a></li><li><a href="#customizing">Customizing</a><ul><li><a href="#rebranding-in-five-minutes">Rebranding in five minutes</a></li></ul></li><li><a href="#image-credits">Image Credits</a></li><li><a href="#license">License</a></li><li><a href="#support">Support</a></li></ul></nav>
+<main>
+<details class="toc-mobile"><summary>Contents</summary><ul><li><a href="#quick-start-try-it-on-your-computer-in-5-minutes">Quick start (try it on your computer in 5 minutes)</a></li><li><a href="#features">Features</a></li><li><a href="#tech-stack">Tech Stack</a></li><li><a href="#requirements">Requirements</a></li><li><a href="#installation">Installation</a></li><li><a href="#run-with-docker-one-command">Run with Docker (one command)</a></li><li><a href="#running-the-tests">Running the tests</a></li><li><a href="#roles--access-admin-accounts-and-permissions">Roles &amp; Access (admin accounts and permissions)</a></li><li><a href="#coupons">Coupons</a></li><li><a href="#cash-on-delivery-optional">Cash on Delivery (optional)</a></li><li><a href="#wishlist">Wishlist</a></li><li><a href="#csv-product-import-admin">CSV product import (admin)</a></li><li><a href="#sizes-and-product-pictures">Sizes and product pictures</a></li><li><a href="#shipping-rates-optional">Shipping rates (optional)</a></li><li><a href="#two-factor-admin-login-optional">Two-factor admin login (optional)</a></li><li><a href="#currency">Currency</a></li><li><a href="#marketplace-multi-vendor">Marketplace (multi-vendor)</a></li><li><a href="#reviews">Reviews</a></li><li><a href="#installable-store-pwa">Installable store (PWA)</a></li><li><a href="#dark-mode">Dark mode</a></li><li><a href="#environment-variables">Environment Variables</a><ul><li><a href="#more-international-gateways-paypal-flutterwave-mollie-optional">More international gateways: PayPal, Flutterwave, Mollie (optional)</a></li></ul></li><li><a href="#policy-pages-before-you-launch">Policy pages (before you launch)</a></li><li><a href="#payments-that-need-a-person-to-look-at-them">Payments that need a person to look at them</a></li><li><a href="#seo-search-engines-and-link-previews">SEO (search engines and link previews)</a></li><li><a href="#project-structure">Project Structure</a></li><li><a href="#tested-and-untested">Tested and untested</a></li><li><a href="#limits-to-know-before-you-launch">Limits to know before you launch</a></li><li><a href="#security-notes">Security Notes</a></li><li><a href="#optional-money-rules">Optional money rules</a></li><li><a href="#languages-first-run-setup-and-demo-mode">Languages, first-run setup and demo mode</a></li><li><a href="#customizing">Customizing</a><ul><li><a href="#rebranding-in-five-minutes">Rebranding in five minutes</a></li></ul></li><li><a href="#image-credits">Image Credits</a></li><li><a href="#license">License</a></li><li><a href="#support">Support</a></li></ul></details>
+<h1 id="threadly---real-time-e-commerce-platform-with-ai-chatbot">Threadly - Real-Time E-Commerce Platform with AI Chatbot</h1>
+<p>A real-time, self-hosted e-commerce platform and multi-vendor clothing marketplace with an AI chatbot, built with Node.js, Express and MongoDB.</p>
+<p>This guide is also available as one page: <code>docs/index.html</code>.</p>
+<p>It is a complete marketplace: independent sellers open shops, shoppers fill one cart from several
+shops and pay once, and each seller ships their own items. It includes real-time
+stock updates, seven payment options (SSLCommerz, Stripe, PayPal, Flutterwave, Mollie, Cash on Delivery and manual transfer), a seller dashboard with commissions and
+payouts, a full admin panel and an AI support chatbot.</p>
+<blockquote>
+<p>&quot;Threadly&quot; is a placeholder brand name. Change the name, colours and logo in
+minutes (see <em>Customizing</em> below), and check that any name you choose is free
+to use before you launch.</p>
+</blockquote>
+<p>It also runs as a normal single-seller clothing store: leave
+<code>MULTIVENDOR_ENABLED</code> off and nothing marketplace-related is shown.</p>
+<hr>
+<h2 id="quick-start-try-it-on-your-computer-in-5-minutes">Quick start (try it on your computer in 5 minutes)</h2>
+<p>You need <strong>Node.js 24 LTS</strong> (recommended; Node.js 22.12 or newer also works) and a MongoDB database (a free MongoDB Atlas
+cluster is fine). No MongoDB? Use the Docker route below.</p>
+<ol>
+<li>Copy the example settings: <code>cp .env.example .env</code></li>
+<li>Open <code>.env</code> and set:<ul>
+<li><code>NODE_ENV=development</code> is already set in the example file, so the shop starts
+with the placeholder <code>SESSION_SECRET</code>. <strong>Set <code>NODE_ENV=production</code> before you go live</strong>
+(secure cookies, HSTS, strict CORS, and the server refuses to start without a real
+<code>SESSION_SECRET</code>; see <em>Environment Variables</em> and <em>Security Notes</em> below).</li>
+<li><code>MONGODB_URI=</code> your MongoDB address, for example <code>mongodb://localhost:27017</code>.</li>
+<li>Leave <code>ADMIN_USERNAME</code> and <code>ADMIN_PASSWORD_HASH</code> empty. They are optional: you create the owner
+account in the browser in step 6. (To set the admin in <code>.env</code> instead, make the hash with
+<code>node scripts/hash-password.js &quot;YourChosenPassword&quot;</code> and paste the printed line exactly as
+printed, single quotes included.)</li>
+</ul>
+</li>
+<li>Install: <code>npm install</code></li>
+<li>Add the demo shops and 40 products (optional): <code>npm run seed</code> (demo prices are sample numbers: set your own <code>CURRENCY_CODE</code> and edit <code>seed/catalog.js</code>)</li>
+<li>Start: <code>npm start</code></li>
+<li>Open <strong><a href="http://localhost:3000/setup" rel="noopener noreferrer">http://localhost:3000/setup</a></strong> and create the owner account (a username and a password).
+Then open <strong><a href="http://localhost:3000" rel="noopener noreferrer">http://localhost:3000</a></strong> (the shop) and <strong><a href="http://localhost:3000/admin.html" rel="noopener noreferrer">http://localhost:3000/admin.html</a></strong> (the admin
+panel) and log in with the account you just made. See <em>Languages, first-run setup and demo mode</em>.</li>
+<li>To see the marketplace: set <code>MULTIVENDOR_ENABLED=true</code> in <code>.env</code>, run <code>npm run seed</code>
+(it adds the demo shops and skips anything already there), and restart.</li>
+</ol>
+<p><strong>Your first admin</strong> is the owner you create at <code>/setup</code> (or the one defined in <code>.env</code>, if you chose
+that); the admin panel stays closed until one exists. To add more people: <code>npm run create-admin -- &lt;username&gt; &lt;password&gt; owner</code>
+(<code>owner</code> = full access, <code>staff</code> = the default staff role, or the name of a role you
+made under <em>Roles &amp; Access</em>). It uses <code>MONGODB_URI</code> from <code>.env</code>.</p>
+<p><strong>With Docker instead</strong> (no Node or MongoDB needed on your machine):</p>
+<pre><code class="language-bash">cp .env.example .env
+# make a SESSION_SECRET:  node -e &quot;console.log(require(&#39;crypto&#39;).randomBytes(32).toString(&#39;hex&#39;))&quot;   (or: openssl rand -hex 32)
+# edit .env: SESSION_SECRET=&lt;the secret&gt;, and, only for trying it on http://localhost, COOKIE_SECURE=false
+# then open http://localhost:3000/setup to create the owner account (or, instead, make a hash with
+#   docker compose run --rm --no-deps app node scripts/hash-password.js &quot;YourChosenPassword&quot;
+# and set ADMIN_USERNAME and ADMIN_PASSWORD_HASH=&#39;&lt;the hash&gt;&#39; in .env, keeping the quotes)
+docker compose up --build
+docker compose exec app npm run seed                                      # optional demo data
+docker compose exec app node scripts/create-admin.js jane StrongPassword123 staff   # optional extra admin
+</code></pre>
+<p>Docker always runs the production setting, so a real <code>SESSION_SECRET</code> is needed
+there. Then open <a href="http://localhost:3000" rel="noopener noreferrer">http://localhost:3000</a>. More detail follows in <em>Installation</em>
+and <em>Run with Docker</em>.</p>
+<hr>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>Multi-vendor marketplace</strong> - sellers apply, you approve; each seller has a
+shop page, a dashboard (products, orders, earnings) and a commission rate you
+control. See <em>Marketplace</em> below.</li>
+<li><strong>Storefront</strong> - browse clothing by category (Men / Women / Kids / Accessories), view
+product detail, add to cart, and checkout. Responsive, with dark mode.</li>
+<li><strong>Stock per size and several pictures</strong> - a seller can keep stock for each size
+(a sold-out size cannot be bought) and show up to 6 pictures per product. See
+<em>Sizes and product pictures</em> below.</li>
+<li><strong>Customer reviews</strong> - customers rate and review a product after it was
+delivered; you can hide or delete reviews in the admin panel (<em>Reviews</em>).
+Stars appear on product cards, and the product page and search-engine data
+include the rating.</li>
+<li><strong>Installable store</strong> - a web app manifest, app icons and a conservative service
+worker let customers add the store to their phone&#39;s home screen. Orders,
+accounts and payments are never kept offline.</li>
+<li><strong>Real-time updates</strong> - product and order changes push instantly to every
+connected browser via Socket.IO (no page refresh needed).</li>
+<li><strong>Secure checkout</strong> - five online gateways: <strong>SSLCommerz</strong> (cards and mobile
+banking; it covers Bangladeshi mobile banking such as bKash), <strong>Stripe</strong>, <strong>PayPal</strong>,
+<strong>Flutterwave</strong> and <strong>Mollie</strong> for international payments, plus <strong>Cash on Delivery</strong> and
+<strong>manual bank or mobile-banking transfer</strong>. You switch on the ones you want in <code>.env</code>; the
+customer chooses among the enabled methods at checkout, and a method that is not set up is
+never offered.</li>
+<li><strong>Customer accounts</strong> - registration, login, session-based auth, and order
+history, with rate-limited auth endpoints to resist brute force.</li>
+<li><strong>Admin dashboard</strong> - a separate, password-protected panel with its own
+navigation (Products, Orders, Statistics, each its own linkable view):
+add, edit and delete products; manage orders and update their status;
+view clickable statistics (total products, total orders, low-stock items,
+total revenue); and a printable, invoice-style order detail page.
+Protected by CSRF tokens and a login rate limiter.</li>
+<li><strong>AI support chatbot</strong> - a built-in chat widget answers customer questions
+about products, sizing, shipping, and orders using the AI provider you choose (Gemini, OpenAI, Anthropic or any OpenAI-compatible service),
+grounded in your live product catalog so it doesn&#39;t invent answers.</li>
+<li><strong>SEO basics</strong> - meta tags, Open Graph and Twitter cards on the storefront,
+<code>robots.txt</code>, <code>sitemap.xml</code>, and a read-only page for every product at
+<code>/product/&lt;id&gt;</code> with Product structured data, so shoppers and search engines
+can find and share individual products. Admin pages are never indexed.</li>
+<li><strong>Coupons</strong> - discount codes (percent or fixed) with minimum order, maximum
+discount, dates and usage limit, managed in the admin panel and entered in the
+cart. The server works out the discount; the discounted total is what the
+payment gateway charges.</li>
+<li><strong>Cash on Delivery (optional)</strong> - turn on <code>COD_ENABLED</code> and customers can
+place an order and pay the courier in cash. Stock is reserved, the order is
+placed (status <strong>PLACED</strong>) for staff to confirm, and the admin marks it as paid
+when the cash is received.</li>
+<li><strong>Manual payment (optional)</strong> - turn on <code>MANUAL_PAYMENT_ENABLED</code> for bank or
+mobile-banking transfers. The customer sees your <code>MANUAL_PAYMENT_INSTRUCTIONS</code>,
+can send a payment reference from the success page (orders that share a
+reference are flagged for you, not refused). An order <strong>without</strong> a reference is cancelled automatically
+(stock and coupon returned) after <code>MANUAL_PAYMENT_HOURS</code>. An order <strong>with</strong> a
+reference is not cancelled: it gets the red-yellow <strong>Payment unconfirmed</strong>
+badge so you can check your bank or wallet, and stays reserved for another
+<code>MANUAL_PAYMENT_REVIEW_HOURS</code> (default 72). If you have not confirmed it by
+then it is cancelled and flagged <strong>Refund due</strong>, so money that did arrive is
+never lost from view and a made-up reference cannot hold stock forever.
+Confirming it records the payment.</li>
+<li><strong>Only working payment methods are offered</strong> - checkout shows a method only
+when it is set up (<code>GET /api/payment-options</code>).</li>
+<li><strong>Wishlist</strong> - a heart on every product; guests keep a list in their browser
+and it moves to their account when they log in.</li>
+<li><strong>CSV product import (admin)</strong> - upload a spreadsheet exported as CSV, preview
+what will happen, then add or update up to 500 products at once.</li>
+<li><strong>Shipping rates (optional)</strong> - a flat fee, an optional rate for your home
+city, and free shipping above an amount you choose (<code>SHIPPING_ENABLED</code>).</li>
+<li><strong>Two-factor admin login (optional)</strong> - authenticator-app codes and backup
+codes for admin accounts (<code>ADMIN_2FA_ENABLED</code>).</li>
+<li><strong>No currency in the interface</strong> - prices are plain numbers; you set one
+machine-readable code in <code>.env</code> (<code>CURRENCY_CODE</code>) for the payment gateways.</li>
+<li><strong>Order email notifications</strong> - customers are emailed automatically when
+their order status changes.</li>
+<li><strong>Security hardening included</strong> - bcrypt password hashing, CSRF protection
+on all admin mutations, rate limiting on auth and public endpoints,
+session fixation prevention, and input sanitization throughout.</li>
+</ul>
+<hr>
+<h2 id="tech-stack">Tech Stack</h2>
+<div class="table-wrap"><table><thead><tr>
+<th>Layer</th>
+<th>Technology</th>
+</tr>
+</thead><tbody><tr>
+<td>Backend</td>
+<td>Node.js, Express 5</td>
+</tr>
+<tr>
+<td>Database</td>
+<td>MongoDB with Mongoose</td>
+</tr>
+<tr>
+<td>Real-time</td>
+<td>Socket.IO</td>
+</tr>
+<tr>
+<td>Auth/Sessions</td>
+<td>express-session + connect-mongo</td>
+</tr>
+<tr>
+<td>Payments</td>
+<td>SSLCommerz (<code>sslcommerz-lts</code>) + optional Stripe, PayPal, Flutterwave, Mollie</td>
+</tr>
+<tr>
+<td>Email</td>
+<td>Nodemailer</td>
+</tr>
+<tr>
+<td>AI Chatbot</td>
+<td>Gemini, OpenAI, Anthropic or OpenAI-compatible (your choice)</td>
+</tr>
+<tr>
+<td>Frontend</td>
+<td>Plain HTML/CSS/JS with jQuery and Bootstrap 5 (loaded from a CDN with integrity hashes; no build step)</td>
+</tr>
+</tbody></table></div>
+<hr>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>Node.js 24 LTS recommended (Node.js 22.12 or newer is supported); <code>.nvmrc</code> selects 24 for nvm and fnm</li>
+<li>A MongoDB database (local install, or a free MongoDB Atlas cluster)</li>
+<li>An account with at least one payment gateway you want to use (SSLCommerz,
+Stripe, PayPal, Flutterwave or Mollie; a free sandbox account is enough for
+testing). Cash on Delivery and manual transfer need no account.</li>
+<li>An API key from your chosen AI provider (Gemini has a free tier) if you want the chatbot
+feature active</li>
+<li>An SMTP email account (Gmail app password, Brevo, Mailgun, etc.). <strong>Email
+setup is required for a working store:</strong> order confirmations, status updates
+and customer email verification all go out by email. Without it the server
+prints a warning at start-up, order emails are skipped, and customers cannot
+verify their address, so they cannot see orders they placed as a guest. The
+link in the verification email only opens the shop; the page then confirms it
+with a second request, so mail scanners that open links cannot verify an
+address. Set <code>EMAIL_HOST</code>, <code>EMAIL_PORT</code>, <code>EMAIL_USER</code> and <code>EMAIL_PASS</code> in <code>.env</code> before
+going live. The example values in <code>.env.example</code> (<code>smtp.example.com</code>,
+<code>your-email@example.com</code>...) count as &quot;not set&quot;. Port 465 is detected
+automatically as a secure (SSL/TLS) connection; use 587 for STARTTLS.</li>
+</ul>
+<hr>
+<h2 id="installation">Installation</h2>
+<ol>
+<li><p><strong>Extract the package</strong> and open a terminal in the project folder.</p>
+</li>
+<li><p><strong>Install dependencies:</strong></p>
+<pre><code class="language-bash">npm install
+</code></pre>
+</li>
+<li><p><strong>Create your environment file</strong> by copying the example and filling in
+your own values:</p>
+<pre><code class="language-bash">cp .env.example .env
+</code></pre>
+<p>See the <a href="#environment-variables">Environment Variables</a> section below
+for what each value means and where to get it.</p>
+</li>
+<li><p><strong>Generate your admin password hash</strong> (never store a plain-text password):</p>
+<pre><code class="language-bash">node scripts/hash-password.js &quot;YourChosenPassword&quot;
+</code></pre>
+<p>Copy the printed line into your <code>.env</code> file <strong>exactly as printed, including
+the single quotes</strong>: a hash is full of <code>$</code> signs, and Docker Compose would
+otherwise read them as variables and silently corrupt the hash (the server
+warns at start-up if the hash looks wrong). The quotes are only for the
+<code>.env</code> file. If you set <code>ADMIN_PASSWORD_HASH</code> somewhere else (a hosting
+dashboard&#39;s environment-variable form, or <code>docker run --env-file</code>), paste
+the hash <strong>without</strong> the quotes, because those places keep them as part of
+the value.</p>
+</li>
+<li><p><strong>(Optional) Seed the demo marketplace</strong> - adds 4 demo shops and 40
+products (Men / Women / Kids clothing and Accessories) with bundled illustrations, so you have
+something to look at immediately:</p>
+<pre><code class="language-bash">npm run seed
+</code></pre>
+<p>This is safe on a database that already has products: it only adds demo
+products whose title is missing and never deletes or edits anything. To
+replace the store&#39;s own products and the demo shops&#39; products with the demo
+set (<strong>fresh or throw-away databases only</strong>), run
+<code>npm run seed -- --reset --yes</code>. Real sellers&#39; shops and products are never
+touched, and a demo shop that orders or payouts already refer to is kept.</p>
+<p>Demo prices are sample numbers; set your own <code>CURRENCY_CODE</code> and edit the prices in <code>seed/catalog.js</code>.</p>
+</li>
+<li><p><strong>Start the server:</strong></p>
+<pre><code class="language-bash">npm start
+</code></pre>
+<p>or, for auto-restart during development:</p>
+<pre><code class="language-bash">npm run dev
+</code></pre>
+</li>
+<li><p><strong>Open the app:</strong></p>
+<ul>
+<li>Storefront: <code>http://localhost:3000</code></li>
+<li>Admin panel: <code>http://localhost:3000/admin.html</code></li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="run-with-docker-one-command">Run with Docker (one command)</h2>
+<p>If you have Docker installed, you don&#39;t need Node or MongoDB on your machine:</p>
+<pre><code class="language-bash">cp .env.example .env     # then fill in your values (see Environment Variables)
+docker compose up --build
+</code></pre>
+<p>The app starts on <code>http://localhost:3000</code> (or the <code>PORT</code> in your <code>.env</code>) with
+a MongoDB container wired up automatically - <code>MONGODB_URI</code> in <code>.env</code> is
+ignored in this mode. The database and the uploaded product pictures are kept in
+Docker volumes between restarts (<code>mongo-data</code> and <code>uploads-data</code>).
+Keep <code>ADMIN_PASSWORD_HASH</code> in single quotes in <code>.env</code> (see step 4 of the
+installation above); <code>docker compose</code> would otherwise mangle the <code>$</code> signs.
+<code>TRUST_PROXY</code> defaults to <code>0</code>; set <code>TRUST_PROXY=1</code> in <code>.env</code> if you put nginx or
+another reverse proxy in front.</p>
+<p>Load the demo products (adds missing ones only; it never deletes products):</p>
+<pre><code class="language-bash">docker compose exec app npm run seed
+</code></pre>
+<p><strong>The container always runs in production mode</strong> (<code>NODE_ENV=production</code> is set in
+the <code>Dockerfile</code> and in <code>docker-compose.yml</code>). That means:</p>
+<ul>
+<li><code>SESSION_SECRET</code> must be a real random string of 32+ characters, otherwise the
+app refuses to start. (Generate one with
+<code>node -e &quot;console.log(require(&#39;crypto&#39;).randomBytes(48).toString(&#39;hex&#39;))&quot;</code>.)</li>
+<li>Session cookies are marked <strong>Secure</strong>, so they only travel over HTTPS. Browsers
+accept this for <code>http://localhost</code>, but <strong>Safari and any plain-HTTP address
+(for example <code>http://192.168.1.20:3000</code>) will silently refuse to keep you logged
+in.</strong> For local testing only, add <code>COOKIE_SECURE=false</code> to <code>.env</code>. Never do
+that on a live site.</li>
+<li>Cross-site requests are blocked unless you list your site in <code>ALLOWED_ORIGIN</code> (one origin, or several separated by commas).</li>
+</ul>
+<p>For a live deployment, put the app behind HTTPS (a reverse proxy such as nginx
+or Caddy) and set <code>TRUST_PROXY=1</code>.</p>
+<hr>
+<h2 id="running-the-tests">Running the tests</h2>
+<pre><code class="language-bash">npm install
+npm test
+</code></pre>
+<p>The whole suite runs in under a minute and needs no database or API keys. They cover model validation, admin
+login and roles, CSRF protection, input validation, security headers, the
+production startup check, and the order flow (payment verification, stock
+reservation, cancellation and expiry of unpaid orders), the SEO pages
+(meta tags, structured data, robots.txt, sitemap.xml, noindex on admin), and
+Cash on Delivery (checkout rules, stock, expiry, cancelling, marking cash as
+received), and coupons (rules, atomic use counting, discounted totals, giving
+uses back, admin permissions).</p>
+<p>After you edit this README, run <code>npm run docs</code> to rebuild the one-page copy in
+<code>docs/index.html</code>.</p>
+<hr>
+<h2 id="roles--access-admin-accounts-and-permissions">Roles &amp; Access (admin accounts and permissions)</h2>
+<p>Log in to the admin panel and open <strong>Roles &amp; Access</strong> in the sidebar. From
+there an Admin can:</p>
+<ul>
+<li><strong>Create and delete roles</strong> (for example &quot;Manager&quot; or &quot;Packer&quot;).</li>
+<li><strong>Set what each role can do</strong> with the <strong>Permission</strong> button, which opens a
+matrix of View / Details / Create / Edit / Delete for each item
+(Product, Order, Coupon). A dash means that action doesn&#39;t exist for that item
+(orders are created by customers at checkout and are never deleted here).</li>
+<li><strong>Add and remove staff accounts</strong> (user name + password + starting role).</li>
+<li><strong>Add a role to a user, list a user&#39;s roles, and remove a role from a user.</strong>
+A user can have several roles; they get the combined permissions.</li>
+</ul>
+<p>What the permissions control:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Permission</th>
+<th>Lets the person...</th>
+</tr>
+</thead><tbody><tr>
+<td>Product: View</td>
+<td>See the product list</td>
+</tr>
+<tr>
+<td>Product: Create</td>
+<td>Add products</td>
+</tr>
+<tr>
+<td>Product: Edit</td>
+<td>Edit products, and quick-save price/stock</td>
+</tr>
+<tr>
+<td>Product: Delete</td>
+<td>Delete products</td>
+</tr>
+<tr>
+<td>Order: View</td>
+<td>See the order list</td>
+</tr>
+<tr>
+<td>Order: Details</td>
+<td>Open a single order / invoice</td>
+</tr>
+<tr>
+<td>Order: Edit</td>
+<td>Change an order&#39;s status, confirm orders, mark Cash on Delivery orders as paid and mark refunds as processed</td>
+</tr>
+<tr>
+<td>Coupon: View</td>
+<td>See the coupon list</td>
+</tr>
+<tr>
+<td>Coupon: Create</td>
+<td>Create coupons</td>
+</tr>
+<tr>
+<td>Coupon: Edit</td>
+<td>Edit a coupon, switch it on or off</td>
+</tr>
+<tr>
+<td>Coupon: Delete</td>
+<td>Delete coupons</td>
+</tr>
+<tr>
+<td>Audit: View</td>
+<td>See the audit log of staff actions</td>
+</tr>
+<tr>
+<td>Vendor: View</td>
+<td>See shops and their earnings (marketplace)</td>
+</tr>
+<tr>
+<td>Vendor: Edit</td>
+<td>Approve / suspend shops, set commissions and record payouts (marketplace)</td>
+</tr>
+</tbody></table></div>
+<p>Notes:</p>
+<ul>
+<li><strong>Admin</strong> (built-in) always has every permission and is the only role that
+can open Roles &amp; Access. The admin defined in your <code>.env</code>
+(<code>ADMIN_USERNAME</code> / <code>ADMIN_PASSWORD_HASH</code>) always has the Admin role and is
+not listed as a staff account.</li>
+<li><strong>Staff</strong> (built-in) is the default role: manage products (except delete)
+and orders, and view coupons. You can change its permissions but not delete it.</li>
+<li>Changes apply <strong>immediately</strong>, even to people who are already logged in.
+Removing an account signs that person out on their next click.</li>
+<li>Statistics needs Order: View (the figures are order figures; the product counts on the same page come along with it). Someone with no role
+sees a &quot;no permissions yet&quot; message.</li>
+<li>The server checks every request. Hiding buttons in the page is only a
+convenience.</li>
+</ul>
+<p>You can also create accounts from the command line:</p>
+<pre><code class="language-bash">npm run create-admin -- jane StrongPassword123 staff
+npm run create-admin -- ali StrongPassword123 &quot;Order Manager&quot;   # any role you created
+npm run create-admin -- sam StrongPassword123 owner              # the Admin role
+# with Docker:
+docker compose exec app node scripts/create-admin.js jane StrongPassword123 staff
+</code></pre>
+<p>Running it again for the same user name resets that person&#39;s password.</p>
+<hr>
+<h2 id="coupons">Coupons</h2>
+<p>Open <strong>Coupons</strong> in the admin sidebar and press <strong>New Coupon</strong>:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Field</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody><tr>
+<td>Code</td>
+<td>3-32 characters: letters, numbers, <code>-</code> and <code>_</code>. Saved in capitals, unique, can not be changed later</td>
+</tr>
+<tr>
+<td>Type / Value</td>
+<td>Percent (above 0, up to 100) of the cart total, or a fixed amount</td>
+</tr>
+<tr>
+<td>Minimum order</td>
+<td>The cart must be worth at least this much (optional)</td>
+</tr>
+<tr>
+<td>Maximum discount</td>
+<td>Caps a percent coupon (optional)</td>
+</tr>
+<tr>
+<td>Starts / Ends</td>
+<td>The coupon only works between these times (optional)</td>
+</tr>
+<tr>
+<td>Usage limit</td>
+<td>How many orders may use it (optional)</td>
+</tr>
+<tr>
+<td>Per-customer limit</td>
+<td>How many orders one customer may use it on (optional). Customers are told apart by email address; <code>+tag</code> suffixes and Gmail dots count as the same address. A customer with a genuinely different mailbox is a different customer</td>
+</tr>
+<tr>
+<td>Active</td>
+<td>Switch off to stop new orders using it without deleting it</td>
+</tr>
+</tbody></table></div>
+<p>How it works:</p>
+<ul>
+<li>Customers type the code in the cart. The server prices the cart from the
+database, checks the rules and shows the new total. Nothing the browser says
+about prices or discounts is trusted.</li>
+<li>The order records the coupon and the discount. The discounted total is what
+SSLCommerz or Stripe charges and what payment verification compares against.</li>
+<li>A discount never takes an order below <strong>the minimum order total</strong> (<code>MIN_ORDER_TOTAL</code>, default 0 = no minimum, <strong>in your own currency</strong>; an order total of 0 is always refused), the smallest payment the
+gateways accept.</li>
+<li>One use is counted when the order is placed, with a single atomic update, so a
+coupon can not be used more often than its limit even when many customers
+order at once. The use is <strong>given back</strong> when the order fails, is cancelled
+before it ships, or expires unpaid. Reopening a cancelled order takes it again.</li>
+<li>Disabling a coupon does not affect orders that already used it. Deleting a
+coupon keeps the discount on those orders.</li>
+<li>A code that does not exist and a disabled one give the same message, and the
+cart box allows 30 attempts per 10 minutes per IP, so codes can not be guessed.</li>
+</ul>
+<hr>
+<h2 id="cash-on-delivery-optional">Cash on Delivery (optional)</h2>
+<p>Cash on Delivery (COD) is off by default. To offer it, set in <code>.env</code>:</p>
+<pre><code>COD_ENABLED=true
+COD_MAX_AMOUNT=10000      # optional: largest order total payable in cash
+</code></pre>
+<p>Restart the app and a <strong>Cash on Delivery</strong> button appears next to the other
+payment methods. <code>COD_MAX_AMOUNT</code> is a plain amount; leave it empty (or <code>0</code>) for no
+limit. The server checks both settings again when the order is placed, using the
+total it works out itself from the product prices.</p>
+<p>How a COD order behaves:</p>
+<ul>
+<li>It needs a valid <strong>phone number</strong> and a <strong>delivery address</strong> (street and city).</li>
+<li>Its stock is reserved straight away (the same atomic update as other orders).</li>
+<li>It is <strong>placed (PLACED)</strong> with no payment gateway, and stays that way until
+staff confirm it (<code>COD_CONFIRM_HOURS</code> is the window; after it the order is
+cancelled and its stock returned). The customer gets a confirmation email,
+which also says how much to pay in cash.</li>
+<li>It is never &quot;pending&quot;, so the unpaid-order timer does not cancel it.
+Cancelling it in the admin panel returns its stock once, like any other
+order that has not shipped.</li>
+<li>The order list and the invoice show <strong>COD / unpaid</strong>. Once the order is
+<strong>DELIVERED</strong>, use <strong>Mark cash received</strong> to record the cash; the badge turns
+to <strong>COD / paid</strong>. This needs the <strong>Order: Edit</strong> permission, works once per
+order, and only for COD orders that are delivered.</li>
+<li><strong>Revenue</strong> - one rule everywhere (dashboard cards, Revenue page, API): an order
+counts once it is <strong>paid</strong> and while it is <strong>not cancelled</strong>. A COD order counts
+after its cash has been received; a manual order after you confirm it.</li>
+<li><strong>Status changes</strong> follow a fixed path: PLACED, then CONFIRMED, then SHIPPED,
+then DELIVERED, a cancel from any live status, and a reopen of a cancelled order.
+An unpaid online (PENDING) order is confirmed by its payment, not by hand.
+Cancelling any paid order flags it <strong>Refund Due</strong>.</li>
+</ul>
+<hr>
+<h2 id="wishlist">Wishlist</h2>
+<p>Nothing to set up. Every product card has a heart. A visitor who is not logged in
+keeps the list in their browser; when they log in, it is merged into their
+account and then follows them to any device (up to 200 products). Out-of-stock
+and deleted products are handled: deleted ones drop out of the list.</p>
+<hr>
+<h2 id="csv-product-import-admin">CSV product import (admin)</h2>
+<p>In the admin panel, open <strong>Products</strong> and then <strong>Import CSV</strong> (needs the <em>product create</em> and/or
+<em>edit</em> permission, depending on the mode).</p>
+<ol>
+<li>Download the template from the dialog (or use your own file; <code>Name</code>, <code>Qty</code> and
+<code>Image</code> also work as column names).</li>
+<li>Choose the file and a mode: <strong>add new only</strong>, <strong>update existing only</strong>, or
+<strong>update existing and add new</strong>. Products are matched by <strong>title</strong>, ignoring
+capitals.</li>
+<li>Press <strong>Preview</strong>. Nothing is saved yet; every row is shown as New, Update,
+Skipped or Error, with the reason.</li>
+<li>Press <strong>Import</strong>.</li>
+</ol>
+<p>Columns: <code>title</code> (required), <code>price</code>, <code>stock</code>, <code>category</code>,
+<code>description</code>, <code>imageUrl</code> (an address, not an embedded picture) and <code>sizes</code>
+(optional, stock per size written like <code>S:5;M:3;L:2</code>; the product&#39;s total stock
+then becomes their sum and the <code>stock</code> cell is ignored). A new product
+needs a price. In update mode an empty cell keeps the current value. Limits: 500
+rows and 1 MB per file. Comma, semicolon and tab separated files all work, and
+so do files saved by Excel (UTF-8 with a BOM). Each import is written to the
+audit log.</p>
+<hr>
+<h2 id="sizes-and-product-pictures">Sizes and product pictures</h2>
+<p><strong>Stock per size.</strong> In the product form (admin panel and seller area) tick
+<strong>Keep stock for each size</strong> and fill in the units of every size you sell. Leave a
+size empty if you do not sell it; <code>0</code> shows it as <em>sold out</em>. Customers can only
+pick the sizes you filled in, a sold-out size cannot be chosen, and an order takes
+its units from that size. The product&#39;s total stock is always the sum of its sizes,
+so lists, the low-stock report and the chatbot keep working. Products without this
+option keep one stock number, exactly as before, and you can switch a product between
+the two ways in its edit form. Cancelling an order puts the units back into the size
+they came from. Saving the form changes each size only by the amount you changed it,
+so units sold while the form was open stay sold. Switching a product from one stock
+number to sizes while orders are being placed can briefly miscount; do it at a quiet moment.</p>
+<p><strong>Pictures.</strong> A product has one main picture and up to 5 more. Uploaded files are stored in
+<code>UPLOAD_DIR</code> (default <code>uploads/</code>) under random names and served from <code>/uploads/</code>; the
+product keeps only the short address. In Docker the folder is a volume (see
+<code>docker-compose.yml</code>). Back it up together with the database. Pictures uploaded in a form that
+is never saved are deleted after a day, and a product&#39;s files are deleted with the product
+(unless another product uses the same file). Each shop, and the store&#39;s own products, can
+hold at most 300 picture files: the ones its products use plus unused uploads from the last
+day. Past that, uploads are refused until pictures are removed. The main picture can also still be an address
+(<code>https://...</code>; plain <code>http://</code> addresses are refused because the page&#39;s security policy would block them). The product page (<code>/product/&lt;id&gt;</code>) shows the extra pictures and adds them to
+the search-engine data.</p>
+<p>On hosting without a persistent disk set <code>UPLOAD_STORAGE=database</code>: pictures then stay inside
+the product record (the older way) and only one picture per product is possible.</p>
+<p><strong>Pictures stored inside the product record</strong> (the database storage mode) keep working. To move them to files, run
+<code>npm run migrate-images</code> (it only reports what it would do) and then
+<code>npm run migrate-images -- --apply</code>. Make a database backup first.</p>
+<hr>
+<h2 id="shipping-rates-optional">Shipping rates (optional)</h2>
+<p>Off by default. In <code>.env</code>:</p>
+<pre><code>SHIPPING_ENABLED=true
+SHIPPING_FLAT_RATE=60       # every address (example; the shipped default is 0)
+SHIPPING_FREE_OVER=5000     # goods (after coupon) at or above this ship free; 0 = never
+SHIPPING_HOME_CITY=Dhaka    # optional special rate for one city...
+SHIPPING_HOME_RATE=60       # ...(capitals and extra spaces do not matter)
+</code></pre>
+<p>The customer sees the fee in the cart (it updates when they type their city) and
+a hint such as &quot;Add 350.00 more for free shipping&quot;. The server works out the fee
+itself and adds it <strong>after</strong> the coupon, so the gateway charges the full total,
+the Cash on Delivery limit counts it, and invoices and emails show a Shipping
+line. If you change the rates while someone is checking out, their order is
+refused with the usual &quot;price changed&quot; message and the cart refreshes.</p>
+<hr>
+<h2 id="two-factor-admin-login-optional">Two-factor admin login (optional)</h2>
+<p>Off by default. Set <code>ADMIN_2FA_ENABLED=true</code> and restart. Each admin then clicks
+<strong>2FA</strong> in the admin top bar, adds the key to an authenticator app (Google
+Authenticator, Microsoft Authenticator, Authy, 1Password...), types the first
+code, and saves the 8 one-time <strong>backup codes</strong> that are shown once. From then on
+that account must give a code at login. Accounts that have not set it up keep
+logging in with their password only, so you cannot lock anyone out by switching
+the feature on.</p>
+<p>Safety details: a code cannot be used twice, 10 wrong codes in a row pause the
+account for 15 minutes, and turning it off needs the password plus a code. The
+secrets are stored encrypted with <code>TWO_FACTOR_ENCRYPTION_KEY</code> (or, when that is
+empty, a key derived from <code>SESSION_SECRET</code>), so changing the key makes them
+unreadable and each admin must set 2FA up again. Admin logins and failed logins are written to the audit log (the
+username only). If an admin loses the phone and the backup codes, run this on
+the server:</p>
+<pre><code>node scripts/reset-2fa.js &lt;username&gt;            # the admin from .env
+node scripts/reset-2fa.js &lt;username&gt; staff      # an account made in the panel
+</code></pre>
+<hr>
+<h2 id="currency">Currency</h2>
+<p>The store shows <strong>plain numbers only</strong>: no currency sign, code or name appears
+on any page, email, invoice or in the admin panel. Two things in <code>.env</code> still need a
+machine-readable code, and neither is ever shown to customers:</p>
+<pre><code>CURRENCY_CODE=        # 3-letter ISO 4217 code of your prices, sent to payment gateways and search engines
+MIN_ORDER_TOTAL=0     # smallest order total for any payment method (a plain number in YOUR currency)
+</code></pre>
+<p>Online payment methods are switched off until <code>CURRENCY_CODE</code> is set. Card
+gateways charge in the same currency unless you set <code>CARD_CURRENCY</code> (and a
+<code>CARD_RATE</code>, how many card-currency units 1 price unit is worth). The rate is
+not fetched from the internet. If your cards are charged in a different
+currency, say so in your Terms page.</p>
+<p><strong>How amounts are kept.</strong> Money is stored and added up in whole units of the smallest piece of your own
+currency, so totals never pick up rounding errors. That piece follows <code>CURRENCY_CODE</code>:</p>
+<ul>
+<li><strong>Two decimals</strong> (most currencies, and any code that is not listed below): prices, coupon amounts, shipping and
+limits can have up to two decimals.</li>
+<li><strong>No decimals</strong> (BIF, CLP, DJF, GNF, JPY, KMF, KRW, MGA, PYG, RWF, VND, VUV, XAF, XOF and XPF): prices, coupon
+amounts and fees must be whole numbers, and every total is a whole number. A percentage coupon or commission is
+rounded to a whole unit.</li>
+<li><strong>Three decimals</strong> (BHD, JOD, KWD, OMR and TND): up to three decimals.</li>
+<li>A <strong>percentage</strong> (coupon, commission) always has up to two decimals, whatever the currency.</li>
+<li>With no <code>CURRENCY_CODE</code> the shop works in hundredths, as for two-decimal currencies.</li>
+</ul>
+<p><strong>What a gateway is sent.</strong> Card gateways charge in <code>CARD_CURRENCY</code> (default <code>CURRENCY_CODE</code>) at <code>CARD_RATE</code>, in the
+decimals that currency has: whole units for the no-decimal currencies, three decimals for the three-decimal ones
+(rounded once to a multiple of 10 thousandths, as Stripe asks), two for everything else. ISK and UGX stay at two
+decimals, as Stripe expects. PayPal also wants whole amounts in HUF and TWD, so PayPal uses whole units there while
+Stripe, Flutterwave and Mollie keep two decimals.</p>
+<p><strong>Smallest order and smallest card charge.</strong> An order total can never be 0: the smallest total any payment method
+accepts is one smallest unit of your currency (or <code>MIN_ORDER_TOTAL</code>, if that is higher), so a 100% coupon leaves that
+one unit to pay. For Stripe, the smallest charge per currency is the amount Stripe publishes for 31 currencies
+(<code>services/stripeMinCharge.json</code>, for example 50 in JPY). Stripe applies the minimum of your account&#39;s
+settlement currency, which the shop cannot see, so the table is used for the card currency: check it if your Stripe
+account settles in a different currency. PayPal, Flutterwave and Mollie use one flat minimum (0.50 in a two-decimal
+currency, or 500 thousandths in a three-decimal one), and each of them still applies its own limits and refuses a
+payment that is too small.</p>
+<p><strong>Not verified against the gateways.</strong> The amount rules follow each gateway&#39;s published currency rules, but the tests
+only use fakes for the gateways, so none of them has been confirmed against a live or sandbox gateway. Test each one
+in that gateway&#39;s sandbox before you sell in that currency, especially HUF and TWD, the three-decimal currencies
+(check the amount the gateway shows) and the no-decimal currencies.</p>
+<hr>
+<h2 id="marketplace-multi-vendor">Marketplace (multi-vendor)</h2>
+<p>Off by default. Turn it on in <code>.env</code> and restart:</p>
+<pre><code>MULTIVENDOR_ENABLED=true
+MARKETPLACE_COMMISSION_PERCENT=10     # what a new shop starts with
+</code></pre>
+<p><strong>How it works</strong></p>
+<ol>
+<li>A shopper creates an account and clicks <strong>Sell with us</strong>, then sends an
+application (shop name, description, phone).</li>
+<li>In the admin panel, <strong>Vendors</strong>, you <strong>Approve</strong> the shop. Only approved shops
+can add products, and only their products are visible and buyable.</li>
+<li>The seller manages everything from <code>/vendor.html</code> (<strong>Seller dashboard</strong>):
+products (with pictures), orders that contain their items, earnings and
+their shop details. They never see other sellers&#39; items or the buyer&#39;s email.</li>
+<li>A shopper can put items from several shops in one cart and pay once. The
+order remembers which seller sold each item and the commission that applied
+<em>at that moment</em>, so changing a commission later never rewrites past orders.</li>
+<li>Each seller ships their own items and marks them <strong>shipped</strong> and then
+<strong>delivered</strong>, step by step, with an optional tracking note. The order must be
+paid first, and a cash / transfer order must be <strong>confirmed by the store</strong>
+(status CONFIRMED) before sellers can ship it; unpaid, unconfirmed or cancelled
+orders cannot be shipped, and customer details are shown to a seller only from
+CONFIRMED on. When every seller of an order has shipped, the order becomes
+SHIPPED; when every seller has delivered, DELIVERED (an order that also contains
+the store&#39;s own items is moved by staff). Setting an order SHIPPED or DELIVERED
+by hand also moves every seller&#39;s part that is not delivered yet.
+Categories are <strong>Men, Women, Kids and Accessories</strong> (the same list in the seller
+form, the storefront filter and the seed). Sizes are XS to XXL plus <em>One Size</em>
+for accessories. A customer always chooses a size at checkout, so an accessory keeps its stock
+under the single size <em>One Size</em> (the demo accessories do this).</li>
+<li>Delivered orders become <strong>payable</strong> once the hold is over (<code>PAYOUT_HOLD_DAYS</code>, default <strong>7</strong> days after the seller
+marked their part delivered; a seller marks their own part, so the hold is your window for returns, disputes and card
+chargebacks). You pay the seller outside the app (bank,
+mobile banking, ...) and then press <strong>Record payout</strong> under <em>Vendors</em>, then <em>Earnings</em>. A
+payout covers whole orders and the database refuses to pay the same order to
+the same seller twice, even if two admins click at once.</li>
+</ol>
+<p><strong>The money rules</strong></p>
+<ul>
+<li>A seller earns the price of their items <strong>minus the commission percent</strong> of
+each item. Example: 2 x 899 at 10% gives sales of 1,798.00, commission 179.80, the
+seller earns 1,618.20.</li>
+<li>Coupon discounts and shipping fees stay with the marketplace (the seller&#39;s
+share is never reduced by a coupon). <strong>Business risk:</strong> because of this, a
+coupon is paid out of your own share (commission + shipping + your own items).
+To make sure you never pay out more than the customer paid, checkout and the
+coupon preview <strong>refuse a coupon that would push your share below zero</strong> (for
+example a 100% coupon on a seller&#39;s item). A coupon that is merely larger than
+the commission is still allowed when shipping or your own items cover it, so
+keep percent coupons modest. Gateway fees are not counted.</li>
+<li><strong>Admin figures.</strong> <em>Sales</em> is everything customers paid on paid, not
+cancelled orders (it includes the sellers&#39; shares and shipping). With the
+marketplace on, the dashboard also shows <em>Commissions</em>, the sellers&#39; share, and
+<em>Store revenue</em> = your own items + commission + shipping - coupon discounts
+(that is, sales minus the sellers&#39; share). They use the same rounding as the
+payouts, so the dashboard and the payouts agree.</li>
+<li>Only paid orders that are not cancelled count, the same rule as the admin
+revenue statistics. The one exception: with <code>SELLER_KEEPS_SHIPPED_ON_CANCEL=true</code>, what the sellers keep on cancelled
+orders is shown as its own line and taken off <em>Store revenue</em> (the store pays it while the customer is refunded).</li>
+<li><strong>Shipped goods are never restocked.</strong> If an order is cancelled after a seller has shipped their part, that part&#39;s
+items are not added back to the stock (they left the building). Add them back by hand when the parcel returns. This
+does not depend on whether the seller keeps their earnings.</li>
+<li><strong>Clawback.</strong> If an order is cancelled <em>after</em> you paid the seller for it, that
+amount is owed back. It shows as &quot;Refund due&quot; in the seller&#39;s earnings and is
+taken off their next payout automatically. If it is as large as what is payable,
+no payout is recorded and it stays against future earnings. (Refunding the
+customer&#39;s money is still done outside the app.)</li>
+<li>Earnings and payouts always cover <strong>every</strong> order of a seller, however many
+there are (orders are read in batches, so memory stays flat). The screens show
+the newest 200 lines; the totals include all of them.</li>
+</ul>
+<p><strong>Suspending a shop</strong> hides its products everywhere (store, search engines&#39;
+sitemap, wishlists, the chatbot, and the product pictures) and refuses new orders
+for them, immediately. A suspended seller can still read their items and earnings
+(to settle up) but <strong>no longer sees customers&#39; names, phone numbers or
+addresses</strong>, and cannot ship or edit anything. That includes orders paid before the
+suspension: the store marks them shipped under <em>Orders</em>, or the seller does once
+the shop is reinstated. Reinstating brings everything back. Nothing is deleted.</p>
+<p><strong>Not included</strong> (plan for these before selling to marketplaces that need them):
+automatic split payments (payouts are manual), per-seller shipping fees (one
+shipping fee applies to the whole order and stays with the marketplace),
+seller-specific coupons, seller e-mail notifications, and a seller-facing refund flow.
+(Customer reviews are included; see <em>Reviews</em>.)</p>
+<p><strong>Demo shops.</strong> <code>npm run seed</code> creates four sample shops with no login, already
+<strong>approved</strong>. On a live marketplace they would earn commission and could be paid
+out, so delete or suspend them under <em>Vendors</em> (or seed with <code>--no-shops</code>).
+<code>npm run seed -- --reset --yes</code> removes the store&#39;s own products and the demo
+shops (matched by slug, no owner) and never touches real sellers. To try
+the seller side, register a normal account on the store, apply to sell, then
+approve yourself under <em>Vendors</em> in the admin panel.</p>
+<p><strong>Permissions.</strong> Admin accounts see <em>Vendors</em> only with the <code>vendor</code> permission
+(view to see shops and earnings, edit to approve, change commission and record
+payouts). It is part of the built-in <em>Admin</em> role and can be added to custom
+roles under <em>Roles &amp; Access</em>.</p>
+<hr>
+<h2 id="reviews">Reviews</h2>
+<p>A logged-in customer can review a product once, after an order that contains it has the
+status <strong>Delivered</strong> (guest orders count once the customer has verified the e-mail address).
+In <strong>My orders</strong> a <em>Review</em> button appears for each delivered product: 1 to 5 stars and an
+optional text of up to 1,000 characters, stored as plain text. Reviews show the customer&#39;s first
+name and the initial of the last name, never the e-mail address. The product&#39;s average rating and
+review count are shown on product cards, on the product page (<code>/product/&lt;id&gt;</code>, with the latest 10
+reviews) and in the search-engine data.</p>
+<p>Staff with the <em>product view</em> permission see <strong>Reviews</strong> in the admin panel; with <em>product edit</em>
+they can <strong>Hide</strong> a review (it disappears from the store and from the average) or <strong>Delete</strong> it. Both
+are written to the audit log. Deleting a product deletes its reviews.</p>
+<hr>
+<h2 id="installable-store-pwa">Installable store (PWA)</h2>
+<p>The store has a web app manifest (<code>/manifest.webmanifest</code>, named after <code>SITE_NAME</code>), app icons
+(<code>public/img/icon-192.png</code> and <code>icon-512.png</code>, drawn by <code>node scripts/generate-pwa-icons.js</code>; replace
+them with your own artwork, same names and sizes) and a service worker (<code>public/sw.js</code>). On a phone the
+browser then offers <em>Add to Home screen</em>. The worker only keeps the store&#39;s own pictures, style sheets
+and scripts for faster visits and shows <code>offline.html</code> when the network is down. It never stores or
+answers <code>/api</code>, <code>/admin</code>, the seller and payment pages, product pages, uploaded pictures or any request
+that is not a plain GET. Browsers only run service workers on <code>https://</code> addresses and on <code>localhost</code>.
+Pictures are cached by browsers for a week. Pages, scripts and style sheets are loaded from the network first (the saved copy is used only when the visitor is offline). When you change the version in <code>package.json</code>, change <code>VERSION</code> in <code>public/sw.js</code> too; a test checks that they match.
+Compression is not built in: your reverse proxy (nginx, Caddy, Cloudflare) should provide gzip or brotli.</p>
+<hr>
+<h2 id="dark-mode">Dark mode</h2>
+<p>The storefront has an optional dark theme. Visitors switch it with the
+Dark/Light button in the navbar and the choice is remembered in their
+browser. Light stays the default.</p>
+<hr>
+<h2 id="environment-variables">Environment Variables</h2>
+<p>All configuration lives in <code>.env</code> (see <code>.env.example</code> for the full template
+with inline comments).</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Variable</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody><tr>
+<td><code>MONGODB_URI</code></td>
+<td>Yes</td>
+<td>Your MongoDB connection string</td>
+</tr>
+<tr>
+<td><code>DB_NAME</code></td>
+<td>No</td>
+<td>Database name (default: <code>ecommerce</code>)</td>
+</tr>
+<tr>
+<td><code>PORT</code></td>
+<td>No</td>
+<td>Server port (default: <code>3000</code>)</td>
+</tr>
+<tr>
+<td><code>NODE_ENV</code></td>
+<td>No</td>
+<td><code>development</code> (shipped in <code>.env.example</code>) or <code>production</code>. Set <code>production</code> before you go live: it needs a real <code>SESSION_SECRET</code> and HTTPS cookies. Docker always runs <code>production</code></td>
+</tr>
+<tr>
+<td><code>ALLOWED_ORIGIN</code></td>
+<td>Prod only</td>
+<td>Your live address as an origin (<a href="https://www.example.com" rel="noopener noreferrer">https://www.example.com</a>; a comma separated list works too): CORS lock-down, and counted as this site by the cross-site write protection</td>
+</tr>
+<tr>
+<td><code>SESSION_SECRET</code></td>
+<td>Yes</td>
+<td>Random string (32+ characters) used to sign session cookies</td>
+</tr>
+<tr>
+<td><code>ADMIN_USERNAME</code></td>
+<td>Optional</td>
+<td>Admin panel login username. Leave empty and create the owner at <code>/setup</code> instead</td>
+</tr>
+<tr>
+<td><code>ADMIN_PASSWORD_HASH</code></td>
+<td>Optional</td>
+<td>Output of <code>scripts/hash-password.js</code> - never a plain password. Only with <code>ADMIN_USERNAME</code></td>
+</tr>
+<tr>
+<td><code>EMAIL_HOST</code> / <code>PORT</code> / <code>USER</code> / <code>PASS</code></td>
+<td>Recommended</td>
+<td>SMTP credentials for order-status and email-verification emails. Optional for the server to start, but without them emails are skipped and customers cannot verify their address</td>
+</tr>
+<tr>
+<td><code>EMAIL_FROM</code></td>
+<td>No</td>
+<td>Sender shown on emails (default: <code>Threadly &lt;EMAIL_USER&gt;</code>)</td>
+</tr>
+<tr>
+<td><code>EMAIL_SECURE</code></td>
+<td>No</td>
+<td><code>true</code> / <code>false</code> (any capitalisation) to force SSL/TLS on or off. Default: on for port 465, off otherwise</td>
+</tr>
+<tr>
+<td><code>SSLCOMMERZ_STORE_ID</code></td>
+<td>Optional</td>
+<td>From your SSLCommerz merchant dashboard. Leave unset and SSLCommerz is not offered at checkout</td>
+</tr>
+<tr>
+<td><code>SSLCOMMERZ_STORE_PASSWORD</code></td>
+<td>Optional</td>
+<td>From your SSLCommerz merchant dashboard</td>
+</tr>
+<tr>
+<td><code>SSLCOMMERZ_IS_LIVE</code></td>
+<td>Optional</td>
+<td><code>false</code> for sandbox testing, <code>true</code> for real transactions</td>
+</tr>
+<tr>
+<td><code>MANUAL_PAYMENT_ENABLED</code></td>
+<td>No</td>
+<td><code>true</code> offers bank / mobile-banking transfer at checkout (default: off)</td>
+</tr>
+<tr>
+<td><code>MANUAL_PAYMENT_INSTRUCTIONS</code></td>
+<td>No</td>
+<td>What the customer sees about where to send the money</td>
+</tr>
+<tr>
+<td><code>MANUAL_PAYMENT_HOURS</code></td>
+<td>No</td>
+<td>Hours before an unpaid manual order is cancelled (default 24)</td>
+</tr>
+<tr>
+<td><code>MANUAL_PAYMENT_REVIEW_HOURS</code></td>
+<td>No</td>
+<td>Extra hours an order with a payment reference waits for you to check it, before it is cancelled and flagged <em>Refund due</em> (default 72)</td>
+</tr>
+<tr>
+<td><code>SUPPORT_EMAIL</code> / <code>SUPPORT_PHONE</code> / <code>SUPPORT_ADDRESS</code></td>
+<td>No</td>
+<td>Contact details shown in the footer and on the policy pages; empty ones are not shown</td>
+</tr>
+<tr>
+<td><code>STRIPE_SECRET_KEY</code></td>
+<td>Optional</td>
+<td>From dashboard.stripe.com - enables the international card option</td>
+</tr>
+<tr>
+<td><code>STRIPE_WEBHOOK_SECRET</code></td>
+<td>Optional</td>
+<td>From your Stripe webhook endpoint settings</td>
+</tr>
+<tr>
+<td><code>PAYPAL_CLIENT_ID</code> / <code>PAYPAL_CLIENT_SECRET</code></td>
+<td>Optional</td>
+<td>From developer.paypal.com (REST app) - enables PayPal at checkout</td>
+</tr>
+<tr>
+<td><code>PAYPAL_IS_LIVE</code></td>
+<td>Optional</td>
+<td><code>false</code> for the PayPal sandbox, <code>true</code> for real money</td>
+</tr>
+<tr>
+<td><code>PAYPAL_WEBHOOK_ID</code></td>
+<td>Optional</td>
+<td>Id of a PayPal webhook (events <code>CHECKOUT.ORDER.APPROVED</code>, <code>PAYMENT.CAPTURE.COMPLETED</code>) for <code>/api/payment/paypal-webhook</code>; settles orders whose customer paid but did not return to the shop. Unset: the URL answers 400</td>
+</tr>
+<tr>
+<td><code>FLUTTERWAVE_SECRET_KEY</code></td>
+<td>Optional</td>
+<td>From dashboard.flutterwave.com - enables Flutterwave at checkout</td>
+</tr>
+<tr>
+<td><code>FLUTTERWAVE_WEBHOOK_HASH</code></td>
+<td>Optional</td>
+<td>The &quot;secret hash&quot; you set for the Flutterwave webhook</td>
+</tr>
+<tr>
+<td><code>MOLLIE_API_KEY</code></td>
+<td>Optional</td>
+<td><code>test_...</code> or <code>live_...</code> key from my.mollie.com - enables Mollie at checkout</td>
+</tr>
+<tr>
+<td><code>BASE_URL</code></td>
+<td>Yes</td>
+<td>Public URL of your app, e.g. <code>https://yourshop.com</code> (no trailing slash needed). Used for payment redirect callbacks <strong>and</strong> for the canonical links, <code>sitemap.xml</code> and <code>robots.txt</code>, so set it to your real domain before going live</td>
+</tr>
+<tr>
+<td><code>SITE_NAME</code></td>
+<td>No</td>
+<td>Store name used in page titles, Open Graph tags and structured data (default: <code>Threadly</code>, max 60 characters)</td>
+</tr>
+<tr>
+<td><code>SITE_DESCRIPTION</code></td>
+<td>No</td>
+<td>Short description for the home page meta description and link previews (default: a generic clothing-marketplace sentence, max 300 characters)</td>
+</tr>
+<tr>
+<td><code>COD_ENABLED</code></td>
+<td>No</td>
+<td><code>true</code> offers Cash on Delivery at checkout (any capitalisation). Default: off</td>
+</tr>
+<tr>
+<td><code>COD_MAX_AMOUNT</code></td>
+<td>No</td>
+<td>Largest order total that can be paid in cash; empty or <code>0</code> = no limit</td>
+</tr>
+<tr>
+<td><code>COD_CONFIRM_HOURS</code></td>
+<td>No</td>
+<td>Hours an unconfirmed Cash on Delivery order stays open before it is cancelled automatically (default: <code>24</code>)</td>
+</tr>
+<tr>
+<td><code>COD_MAX_OPEN_ORDERS</code></td>
+<td>No</td>
+<td>Most open (not yet final) COD orders per customer email or phone (default: <code>2</code>)</td>
+</tr>
+<tr>
+<td><code>COD_MAX_QUANTITY_PER_LINE</code></td>
+<td>No</td>
+<td>Most units of one item on a COD order (default: <code>3</code>). This and the two COD settings above fall back to their defaults when the value is out of range</td>
+</tr>
+<tr>
+<td><code>COD_ORDER_RATE_LIMIT_MAX</code></td>
+<td>No</td>
+<td>Cash on Delivery orders one address may place per hour (default: <code>5</code>). It is checked before any stock is reserved, so fake COD orders cannot lock up inventory</td>
+</tr>
+<tr>
+<td><code>COOKIE_SECURE</code></td>
+<td>No</td>
+<td>Session cookies are Secure (HTTPS only) in production. Set <code>false</code> only when running a production build over plain HTTP (a test server, an IP address); leave empty otherwise</td>
+</tr>
+<tr>
+<td><code>CSP_DISABLED</code></td>
+<td>No</td>
+<td><code>true</code> turns off the Content-Security-Policy. Only for deployments that must load scripts from a host other than this site, <code>cdn.jsdelivr.net</code> and <code>code.jquery.com</code></td>
+</tr>
+<tr>
+<td><code>TRUST_PROXY</code></td>
+<td>No</td>
+<td>Number of reverse proxies in front of the app (default: <code>0</code>; set <code>1</code> behind one proxy)</td>
+</tr>
+<tr>
+<td><code>PENDING_ORDER_TTL_MINUTES</code></td>
+<td>No</td>
+<td>Minutes an unpaid order keeps its stock reserved (default: <code>60</code>, minimum <code>30</code>); a 10 minute grace period is added before it is cancelled</td>
+</tr>
+<tr>
+<td><code>CHAT_ENABLED</code></td>
+<td>No</td>
+<td><code>false</code> switches the chatbot off and hides the chat bubble (default: on when a key is set)</td>
+</tr>
+<tr>
+<td><code>CHAT_PROVIDER</code></td>
+<td>No</td>
+<td><code>gemini</code> (default), <code>openai</code>, <code>anthropic</code> or <code>openai-compatible</code></td>
+</tr>
+<tr>
+<td><code>CHAT_API_KEY</code></td>
+<td>Only for chatbot</td>
+<td>Your own API key for the chosen provider. Instead you may set the provider&#39;s own variable below</td>
+</tr>
+<tr>
+<td><code>GEMINI_API_KEY</code></td>
+<td>Only for chatbot</td>
+<td>Google Gemini key (used when <code>CHAT_PROVIDER=gemini</code> and <code>CHAT_API_KEY</code> is empty)</td>
+</tr>
+<tr>
+<td><code>OPENAI_API_KEY</code></td>
+<td>Only for chatbot</td>
+<td>OpenAI key (used only when <code>CHAT_PROVIDER=openai</code> and <code>CHAT_API_KEY</code> is empty; <code>openai-compatible</code> uses <code>CHAT_API_KEY</code> only)</td>
+</tr>
+<tr>
+<td><code>ANTHROPIC_API_KEY</code></td>
+<td>Only for chatbot</td>
+<td>Anthropic key (used when <code>CHAT_PROVIDER=anthropic</code> and <code>CHAT_API_KEY</code> is empty)</td>
+</tr>
+<tr>
+<td><code>CHAT_MODEL</code></td>
+<td>For chatbot</td>
+<td>Model name, required for every provider (there is no default; check the provider&#39;s model list)</td>
+</tr>
+<tr>
+<td><code>CHAT_BASE_URL</code></td>
+<td>Only for <code>openai-compatible</code></td>
+<td>Base address of the compatible service (HTTPS)</td>
+</tr>
+<tr>
+<td><code>CHAT_MAX_TOKENS</code></td>
+<td>No</td>
+<td>Longest answer, in tokens (Anthropic default <code>1024</code>)</td>
+</tr>
+<tr>
+<td><code>CHAT_TEMPERATURE</code></td>
+<td>No</td>
+<td>Creativity from <code>0</code> to <code>2</code></td>
+</tr>
+<tr>
+<td><code>CHAT_TIMEOUT_MS</code></td>
+<td>No</td>
+<td>Time allowed for one request to the provider</td>
+</tr>
+<tr>
+<td><code>CHAT_ANTHROPIC_VERSION</code></td>
+<td>No</td>
+<td><code>anthropic-version</code> header value used for Anthropic</td>
+</tr>
+<tr>
+<td><code>CHAT_FALLBACK_MODELS</code></td>
+<td>No</td>
+<td>Comma-separated models to try if the main one keeps failing (default: none). Only models your key can use</td>
+</tr>
+<tr>
+<td><code>CHAT_MAX_RETRIES</code></td>
+<td>No</td>
+<td>Retries per model for temporary errors such as 429 or 503 (default: <code>2</code>, max <code>5</code>)</td>
+</tr>
+<tr>
+<td><code>CHAT_RETRY_BASE_MS</code></td>
+<td>No</td>
+<td>Starting wait between retries, doubled each time with a little randomness</td>
+</tr>
+<tr>
+<td><code>CHAT_TOTAL_TIMEOUT_MS</code></td>
+<td>No</td>
+<td>Longest a customer waits for one chatbot answer (default: <code>30000</code>)</td>
+</tr>
+<tr>
+<td><code>GEMINI_MODEL</code></td>
+<td>No</td>
+<td>Older name for <code>CHAT_MODEL</code> (Gemini only; still works)</td>
+</tr>
+<tr>
+<td><code>GEMINI_FALLBACK_MODELS</code></td>
+<td>No</td>
+<td>Older name for <code>CHAT_FALLBACK_MODELS</code> (Gemini only; still works)</td>
+</tr>
+<tr>
+<td><code>GEMINI_MAX_RETRIES</code></td>
+<td>No</td>
+<td>Older name for <code>CHAT_MAX_RETRIES</code> (Gemini only; still works)</td>
+</tr>
+<tr>
+<td><code>GEMINI_RETRY_BASE_MS</code></td>
+<td>No</td>
+<td>Older name for <code>CHAT_RETRY_BASE_MS</code> (Gemini only; still works)</td>
+</tr>
+<tr>
+<td><code>GEMINI_TOTAL_TIMEOUT_MS</code></td>
+<td>No</td>
+<td>Older name for <code>CHAT_TOTAL_TIMEOUT_MS</code> (Gemini only; still works)</td>
+</tr>
+<tr>
+<td><code>SELLER_KEEPS_SHIPPED_ON_CANCEL</code></td>
+<td>No</td>
+<td><code>true</code>: when a whole order is cancelled, a seller who already shipped their part keeps that earning. Off by default, see &quot;Optional money rules&quot;</td>
+</tr>
+<tr>
+<td><code>COUPON_SPLIT_PRO_RATA</code></td>
+<td>No</td>
+<td><code>true</code>: a coupon is shared across sellers in proportion to their items, and commission is taken on the price after the coupon. Off by default</td>
+</tr>
+<tr>
+<td><code>MARKETPLACE_FUNDS_COUPONS</code></td>
+<td>No</td>
+<td><code>true</code>: keeps the older rule where the marketplace pays for coupons (wins over <code>COUPON_SPLIT_PRO_RATA</code>)</td>
+</tr>
+<tr>
+<td><code>UPLOAD_STORAGE</code></td>
+<td>No</td>
+<td><code>disk</code> (default): uploaded product pictures are files in <code>UPLOAD_DIR</code> and a product can have up to 6 pictures. <code>database</code>: pictures stay in the product record (one picture per product), for hosting without a persistent disk</td>
+</tr>
+<tr>
+<td><code>UPLOAD_DIR</code></td>
+<td>No</td>
+<td>Folder for the picture files (default: <code>uploads/</code> in the project folder). It must be writable and backed up with the database. With Docker it is the volume mounted at <code>/app/uploads</code></td>
+</tr>
+<tr>
+<td><code>CHAT_DAILY_LIMIT</code></td>
+<td>No</td>
+<td>Most chatbot messages per day for the whole shop (default: <code>2000</code>, <code>0</code> = no limit). The count is kept <strong>per server process</strong>: it starts again at zero when the server restarts, and with several instances each has its own count. The server prints a warning at start-up if it is <code>0</code> while the chatbot is on</td>
+</tr>
+<tr>
+<td><code>CHAT_DAILY_LIMIT_PER_IP</code></td>
+<td>No</td>
+<td>Each visitor address gets its own daily share of the chatbot limit, so one abuser cannot use up the shop-wide limit (default: <code>100</code>, <code>0</code> = no per-visitor limit). Also kept per server process</td>
+</tr>
+<tr>
+<td><code>CURRENCY_CODE</code></td>
+<td>With any online payment</td>
+<td>3-letter ISO code of your prices, used only for gateways and search data (never shown). Online payment stays off until it is set</td>
+</tr>
+<tr>
+<td><code>CARD_CURRENCY</code></td>
+<td>No</td>
+<td>Currency card gateways charge in (default: <code>CURRENCY_CODE</code>). Amounts are sent in that currency&#39;s own units (JPY and KRW have no decimals, KWD and BHD have three)</td>
+</tr>
+<tr>
+<td><code>CARD_RATE</code></td>
+<td>If the card currency differs</td>
+<td>Card-currency units per 1 price unit; production refuses to start without it when the currencies differ</td>
+</tr>
+<tr>
+<td><code>MIN_ORDER_TOTAL</code></td>
+<td>No</td>
+<td>Smallest order total for any payment method (default 0 = no minimum, in the shop&#39;s currency; a total of 0 is always refused)</td>
+</tr>
+<tr>
+<td><code>ORDER_RATE_LIMIT_MAX</code></td>
+<td>No</td>
+<td>Most orders per IP address per 15 minutes (default: <code>20</code>)</td>
+</tr>
+<tr>
+<td><code>API_RATE_LIMIT_MAX</code></td>
+<td>No</td>
+<td>Most <code>/api</code> and <code>/admin</code> requests per IP address per 15 minutes (default: <code>300</code>, allowed <code>30</code> to <code>10000</code>). Raise it if many customers share one address. Payment gateway callbacks are never limited</td>
+</tr>
+<tr>
+<td><code>PAYOUT_HOLD_DAYS</code></td>
+<td>No</td>
+<td>Marketplace: days delivered earnings stay pending before they can be paid out (default: <code>7</code>, max <code>90</code>; <code>0</code> = no hold)</td>
+</tr>
+<tr>
+<td><code>MULTIVENDOR_ENABLED</code></td>
+<td>No</td>
+<td><code>true</code> turns the store into a multi-vendor marketplace (default: off)</td>
+</tr>
+<tr>
+<td><code>MARKETPLACE_COMMISSION_PERCENT</code></td>
+<td>No</td>
+<td>Commission a new shop starts with, 0 to 90 (default: <code>10</code>)</td>
+</tr>
+<tr>
+<td><code>SHIPPING_ENABLED</code></td>
+<td>No</td>
+<td><code>true</code> adds a delivery fee at checkout (default: off)</td>
+</tr>
+<tr>
+<td><code>SHIPPING_FLAT_RATE</code></td>
+<td>No</td>
+<td>Fee for every address, a plain number in your shop&#39;s currency (default 0; set your own amount before turning shipping on)</td>
+</tr>
+<tr>
+<td><code>SHIPPING_FREE_OVER</code></td>
+<td>No</td>
+<td>Goods total (after coupon) at or above which shipping is free; <code>0</code> = never</td>
+</tr>
+<tr>
+<td><code>SHIPPING_HOME_CITY</code> / <code>SHIPPING_HOME_RATE</code></td>
+<td>No</td>
+<td>Optional special fee for one city</td>
+</tr>
+<tr>
+<td><code>ADMIN_2FA_ENABLED</code></td>
+<td>No</td>
+<td><code>true</code> lets admins turn on authenticator-app login (default: off)</td>
+</tr>
+<tr>
+<td><code>TWO_FACTOR_ENCRYPTION_KEY</code></td>
+<td>No</td>
+<td>Key that encrypts the two-factor secrets. When empty, a key is derived from <code>SESSION_SECRET</code>. Choose it once: changing it later means each admin sets 2FA up again</td>
+</tr>
+</tbody></table></div>
+<blockquote>
+<p><strong>Payment gateways, customer&#39;s choice:</strong> every gateway is optional and is
+shown at checkout only when it is configured. SSLCommerz (cards and mobile
+banking, including Bangladeshi mobile banking) needs <code>SSLCOMMERZ_STORE_ID</code> and <code>SSLCOMMERZ_STORE_PASSWORD</code>; leave
+them empty and it is hidden. <strong>Stripe is optional</strong></p>
+<ul>
+<li>leave <code>STRIPE_SECRET_KEY</code> empty and Stripe simply does not appear at checkout; the other methods keep
+working exactly as before. You never edit <code>public/index.html</code> to switch a payment method on or off: set or
+clear its keys in <code>.env</code> and restart. (If someone sends a Stripe order to the server anyway while it is
+not configured, the server refuses it with a clear message.) Add Stripe whenever you want to serve
+international customers, without touching any other code.</li>
+</ul>
+<p><strong>Setting up Stripe (optional):</strong></p>
+<ol>
+<li>Create a free account at <a href="https://dashboard.stripe.com/register" rel="noopener noreferrer">stripe.com</a>,
+grab your <strong>test</strong> secret key (starts <code>sk_test_</code>) from
+<a href="https://dashboard.stripe.com/apikeys" rel="noopener noreferrer">dashboard.stripe.com/apikeys</a>, and
+put it in <code>STRIPE_SECRET_KEY</code>.</li>
+<li>Set <code>CURRENCY_CODE</code> (and, only if cards are charged in another currency,
+<code>CARD_CURRENCY</code> and <code>CARD_RATE</code>; the rate is a static number you update).</li>
+<li>For the webhook (recommended, not required for testing): install the
+<a href="https://docs.stripe.com/stripe-cli" rel="noopener noreferrer">Stripe CLI</a>, run
+<code>stripe listen --forward-to localhost:3000/api/payment/stripe-webhook</code>,
+and copy the printed webhook signing secret into <code>STRIPE_WEBHOOK_SECRET</code>.
+In production, add a real webhook endpoint in the Stripe Dashboard
+pointing at <code>https://yourdomain.com/api/payment/stripe-webhook</code> instead.</li>
+<li>Switch to live keys (<code>sk_live_...</code>) only once you&#39;re ready for real
+transactions - the same sandbox-to-live step as SSLCommerz.</li>
+</ol>
+</blockquote>
+<h3 id="more-international-gateways-paypal-flutterwave-mollie-optional">More international gateways: PayPal, Flutterwave, Mollie (optional)</h3>
+<p>Each gateway appears at checkout <strong>only when its keys are in <code>.env</code></strong> - leave
+them empty and nothing changes. All three charge in <code>CARD_CURRENCY</code> (default <code>CURRENCY_CODE</code>) at <code>CARD_RATE</code>
+(the exact amount is stored on the order and checked again when the
+customer comes back; a payment for a different amount or currency is never
+confirmed). Restart the server after editing <code>.env</code>, then open
+<code>/api/payment-options</code> to see which gateways are on.</p>
+<p><strong>PayPal</strong></p>
+<ol>
+<li>Create a REST app at <a href="https://developer.paypal.com/dashboard/applications" rel="noopener noreferrer">developer.paypal.com</a>
+(the Sandbox tab first).</li>
+<li>Put its Client ID and Secret in <code>PAYPAL_CLIENT_ID</code> and <code>PAYPAL_CLIENT_SECRET</code>,
+keep <code>PAYPAL_IS_LIVE=false</code>.</li>
+<li>Pay with a PayPal <em>sandbox personal</em> account. For real money, use the Live
+keys and set <code>PAYPAL_IS_LIVE=true</code>.</li>
+<li>A webhook is optional: the money is taken when the customer returns to the
+shop, and never for an order that was cancelled or has expired. To also
+settle customers who paid but closed the page, add a webhook for
+<code>CHECKOUT.ORDER.APPROVED</code> and <code>PAYMENT.CAPTURE.COMPLETED</code> pointing at
+<code>/api/payment/paypal-webhook</code> and put its id in <code>PAYPAL_WEBHOOK_ID</code>.</li>
+</ol>
+<p><strong>Flutterwave</strong></p>
+<ol>
+<li>Turn on Test mode in <a href="https://dashboard.flutterwave.com" rel="noopener noreferrer">dashboard.flutterwave.com</a>
+and copy the secret key into <code>FLUTTERWAVE_SECRET_KEY</code>.</li>
+<li>Optional: under Settings, then Webhooks, set the URL to
+<code>https://yourdomain.com/api/payment/flutterwave-webhook</code> and put the same
+secret hash in <code>FLUTTERWAVE_WEBHOOK_HASH</code>. This confirms orders even if the
+customer closes the page before returning. Without the hash, the webhook
+refuses every call.</li>
+<li>Flutterwave&#39;s test cards are listed in its documentation.</li>
+</ol>
+<p><strong>Mollie</strong></p>
+<ol>
+<li>Copy a <code>test_...</code> API key from <a href="https://my.mollie.com/dashboard/developers/api-keys" rel="noopener noreferrer">my.mollie.com</a>
+into <code>MOLLIE_API_KEY</code>.</li>
+<li>The webhook address is sent with each payment, but only when <code>BASE_URL</code> is a
+public <code>https</code> address; on localhost Mollie cannot reach the shop, so orders
+are confirmed when the customer returns. Use <code>live_...</code> for real payments.</li>
+</ol>
+<p>Which currencies and countries each gateway accepts depends on your merchant
+account with that gateway - check it with them before you promise a gateway to
+your customers. These three integrations follow each gateway&#39;s documented
+REST flow and are covered by automated tests that use fake gateway replies;
+test each one once with your own sandbox keys before going live.</p>
+<blockquote>
+<p><strong>The AI chatbot needs your own API key:</strong> the chatbot will not
+work until you add a valid key for the provider in <code>CHAT_PROVIDER</code> (Gemini by
+default; see <a href="https://ai.google.dev/gemini-api/docs" rel="noopener noreferrer">ai.google.dev</a>). Usage
+costs are your own, separate from this product&#39;s price. Without a key, or with
+<code>CHAT_ENABLED=false</code>, the chat bubble hides itself. Check your key and model
+with <code>node scripts/chat-check.js &quot;Hello&quot;</code>. Set <code>CHAT_MODEL</code> to a model from
+the provider&#39;s current list; there is no built-in default. Reliability
+(retries with backoff, <code>Retry-After</code>, fallback models, a daily limit, a clear
+&quot;temporarily unavailable&quot; answer) applies to every provider.</p>
+</blockquote>
+<hr>
+<h2 id="policy-pages-before-you-launch">Policy pages (before you launch)</h2>
+<p>The store ships with six policy pages: <code>/privacy.html</code>, <code>/terms.html</code>,
+<code>/returns.html</code> (returns and refunds), <code>/shipping.html</code>, <code>/faq.html</code> and
+<code>/contact.html</code>. They are linked from the footer and listed in <code>sitemap.xml</code>.
+The contact details on them come from <code>SUPPORT_EMAIL</code>, <code>SUPPORT_PHONE</code> and
+<code>SUPPORT_ADDRESS</code> in <code>.env</code> (nothing is shown for an empty one). The chatbot is
+told to point customers to these pages and never to invent a return window or
+delivery time, so keep <code>returns.html</code> as the one place those rules live.</p>
+<blockquote>
+<p><strong>These pages are templates, not legal advice.</strong> Replace every
+<code>[PLACEHOLDER]</code> (business name, return days, delivery areas, jurisdiction,
+dates) and have the wording checked for your country before you go live.</p>
+</blockquote>
+<p><strong>Other things to know before you launch</strong></p>
+<ul>
+<li><code>MIN_ORDER_TOTAL</code> is 0 (no minimum) by default. Set it to a number in your own currency if tiny orders cost you more than they earn.</li>
+<li>The per-customer coupon limit counts one customer per normalised email address (case, <code>+tag</code> and Gmail dots are ignored). A shopper with a completely different address gets a fresh allowance.</li>
+<li>Rate limits, account lockouts, email caps and chat budgets are kept in the server&#39;s memory. A restart clears them and several server instances do not share them.</li>
+<li>See <em>Tested and untested</em> below for what you should try once on your own accounts before you go live.</li>
+</ul>
+<h2 id="payments-that-need-a-person-to-look-at-them">Payments that need a person to look at them</h2>
+<p>Some payments cannot be confirmed by the software alone. They show a yellow
+<strong>Payment unconfirmed</strong> badge (or a red/yellow <strong>Refund due</strong> one) in the admin
+order list:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Badge</th>
+<th>Meaning</th>
+<th>What to do</th>
+</tr>
+</thead><tbody><tr>
+<td>Payment unconfirmed (manual transfer)</td>
+<td>The customer sent a payment reference but you have not verified the transfer.</td>
+<td>Check your bank or wallet, then <strong>Payment received, confirm</strong>. If you do nothing, the order is cancelled after <code>MANUAL_PAYMENT_REVIEW_HOURS</code> and becomes <em>Refund due</em>.</td>
+</tr>
+<tr>
+<td>Payment unconfirmed (online)</td>
+<td>SSLCommerz accepted the payment but marked it risky (<code>risk_level</code> 1), so the order stays PENDING and is <strong>not</strong> cancelled by the unpaid-order timer.</td>
+<td>Check it in the SSLCommerz panel, then <strong>Payment checked, confirm</strong> (it counts as paid from then on) or cancel it (it then shows <em>Refund due</em>).</td>
+</tr>
+<tr>
+<td>Paid after cancellation</td>
+<td>A payment arrived for an order that was already cancelled.</td>
+<td>Reopen the order (status CONFIRMED) or refund the customer, then press <strong>Mark Refunded</strong>.</td>
+</tr>
+<tr>
+<td>Refund due</td>
+<td>An order that was paid, or that the customer said they paid, was cancelled.</td>
+<td>Check the money, refund it outside the app if needed, then press <strong>Mark Refunded</strong> (a refunded order cannot be reopened).</td>
+</tr>
+</tbody></table></div>
+<h2 id="seo-search-engines-and-link-previews">SEO (search engines and link previews)</h2>
+<p>Set <code>BASE_URL</code> (your real public address), <code>SITE_NAME</code> and <code>SITE_DESCRIPTION</code>
+in <code>.env</code> and restart. The server then provides:</p>
+<div class="table-wrap"><table><thead><tr>
+<th>Address</th>
+<th>What it is</th>
+</tr>
+</thead><tbody><tr>
+<td><code>/</code></td>
+<td>The storefront, with title, description, canonical link, Open Graph and Twitter card tags, plus Organization and WebSite structured data</td>
+</tr>
+<tr>
+<td><code>/product/&lt;id&gt;</code></td>
+<td>A read-only page per product (own title, description, Open Graph tags and Product structured data with the price and availability). Each product card on the storefront links to it. An unknown id shows a 404 page</td>
+</tr>
+<tr>
+<td><code>/sitemap.xml</code></td>
+<td>The home page and every product page, built from the database each time it is requested</td>
+</tr>
+<tr>
+<td><code>/robots.txt</code></td>
+<td>Allows crawling, blocks <code>/api/</code>, <code>/admin/</code> and <code>/socket.io/</code>, and points to the sitemap</td>
+</tr>
+</tbody></table></div>
+<p>After going live, submit <code>https://yourshop.com/sitemap.xml</code> in Google Search
+Console (and Bing Webmaster Tools).</p>
+<p>Good to know:</p>
+<ul>
+<li>Canonical links and the sitemap always use <code>BASE_URL</code>, never the address in
+the visitor&#39;s request.</li>
+<li>Admin pages (<code>/admin.html</code> and the <code>/admin/...</code> API) are marked <code>noindex</code>
+in the HTML and with an <code>X-Robots-Tag</code> header. <code>/admin.html</code> is left out of
+<code>robots.txt</code>: a crawler that is not allowed to open it could
+never see the <code>noindex</code>.</li>
+<li>Link previews (Open Graph / Twitter) need a public PNG, JPG or WebP image
+address. Product pictures in those formats, on this site or at an <code>https://</code>
+address, are used. Uploaded pictures, SVG pictures (including the bundled
+product pictures) and anything else fall back to <code>public/img/og-default.png</code>
+in previews; they still show on the product page.</li>
+<li><code>/product/&lt;id&gt;</code> and <code>/sitemap.xml</code> have their own limit of 120 requests per
+minute per visitor; the storefront, <code>robots.txt</code> and static files are not
+limited.</li>
+</ul>
+<hr>
+<h2 id="project-structure">Project Structure</h2>
+<pre><code>|-- config/                  # db.js (MongoDB), sessionSecret.js and envCheck.js (start-up checks)
+|-- models/                  # Mongoose schemas (Product, Order, User, Admin, AdminTwoFactor, Role, Coupon, CouponRedemption, Vendor, Payout, AuditLog, SetupLock)
+|-- middleware/
+|   |-- sameOrigin.js         # Cross-site write protection for /admin, /api/users, /api/vendor and checkout, coupon, chat and payment-reference writes
+|   `-- demoMode.js           # DEMO_MODE: refuses deletes and changes to staff, roles, passwords, 2FA, vendors, payouts and refund marks
+|-- routes/
+|   |-- api.js                # Public storefront + payment + chat endpoints
+|   |-- admin.js               # Admin-only product/order management
+|   |-- adminExtras.js        # CSV product import and two-factor setup (attached to admin.js)
+|   |-- seo.js                  # Home page meta tags, robots.txt, sitemap.xml, /product/:id
+|   |-- setup.js               # First-run /setup page API (token rule, owner claim)
+|   |-- vendor.js              # Marketplace: public shops and the seller&#39;s own area
+|   `-- users.js                # Customer registration/login/orders
+|-- services/
+|   |-- emailService.js       # Order, status and email-verification emails
+|   |-- orderService.js        # Stock reserve/release, cancel and reopen orders, expiry of unpaid orders
+|   |-- cod.js                  # Cash on Delivery settings and checkout rules
+|   |-- marketplace.js        # Marketplace rules: visibility, commission, earnings, payouts, revenue split
+|   |-- money.js                # Integer-minor money helpers
+|   |-- productRules.js        # One set of product rules (price and stock) for admin, CSV and sellers
+|   |-- images.js               # Product picture address rules and serving
+|   |-- uploads.js              # Picture files on disk (UPLOAD_DIR), clean-up of unused files
+|   |-- sizes.js                # Sizes and stock per size
+|   |-- stock.js                # Atomic stock changes (whole stock and per size)
+|   |-- productUpdate.js       # The part of a product edit that the admin and seller routes share (stock plan, pictures)
+|   |-- categories.js          # The category list (Men, Women, Kids, Accessories) and name matching
+|   |-- brand.js                # The shop name (SITE_NAME) for server-side text
+|   |-- reviews.js              # Review rules (who may review), cleaning, rating summary
+|   |-- orderStatus.js         # Which status changes an admin may make
+|   |-- paymentConfig.js       # Which payment methods are configured / offered
+|   |-- paymentReference.js    # Flags orders that share a manual-payment reference; drops the old unique index
+|   |-- logRedact.js           # Blanks secrets (tokens, keys, transaction ids) in access-log addresses
+|   |-- origins.js             # ALLOWED_ORIGIN as one origin or a comma separated list (CORS, Socket.IO)
+|   |-- passwordRules.js       # One password rule for customers and staff
+|   |-- sessions.js            # Ends a customer&#39;s other sessions after a password change or reset
+|   |-- loginGuard.js          # Locks one account for a while after too many wrong passwords
+|   |-- mailBudget.js          # Caps how many order emails and verification or reset links one address receives per hour
+|   |-- chatClients.js         # Chat history under the tl_chat cookie and the daily chat share per visitor address
+|   |-- intlGateways.js        # PayPal, Flutterwave and Mollie
+|   |-- auditService.js        # Audit log writer
+|   |-- shipping.js            # Shipping rates (flat, home city, free over a limit)
+|   |-- csvImport.js           # CSV reading and the import plan
+|   |-- totp.js / twoFactor.js # Authenticator-app codes and the 2FA login check
+|   |-- coupons.js              # Coupon rules (plain functions)
+|   |-- couponService.js        # Atomic coupon use counting
+|   |-- permissions.js         # Permission catalog and built-in roles
+|   |-- adminEnv.js            # Tells a missing, valid and malformed .env admin apart
+|   |-- seo.js                  # SEO settings, meta tags, JSON-LD, sitemap and product page rendering
+|   |-- chatPolicy.js          # chatbot instructions
+|   |-- llm/                   # chatbot: index.js (request, retries, fallback models), config.js (settings from .env)
+|   |   |-- retry.js            # Retry-After parsing and back-off delays
+|   |   `-- providers/          # gemini.js, openai.js, anthropic.js and openaiCompatible.js (OpenAI-style servers)
+|   `-- plainText.js           # strips markup characters from titles and names
+|-- public/                   # Storefront + admin frontend (HTML/CSS/JS); img/ holds the bundled SVG artwork;
+|                             #   js/brand.js puts SITE_NAME into every page; js/i18n.js switches language and the Bootstrap RTL build;
+|                             #   js/motion-core.js holds the stock flash and placeholder logic; css/payment.css styles the payment result pages
+|   `-- privacy / terms / returns / shipping / faq / contact .html   # Policy pages (templates: replace the [PLACEHOLDERS])
+|-- seed/seed.js               # Demo seeding script; seed/catalog.js holds the demo shops and products
+|-- scripts/hash-password.js   # Admin password hash generator
+|-- scripts/create-admin.js    # Create extra admin accounts from the command line
+|-- scripts/migrate-images.js  # Move pictures stored in the database to files (npm run migrate-images)
+|-- scripts/generate-pwa-icons.js  # Draws the app icons (public/img/icon-192.png, icon-512.png)
+|-- scripts/chat-check.js      # Send one test message to your chatbot provider (checks key and model)
+|-- scripts/generate-store-assets.js  # Draws a 200 x 200 icon and a 1600 x 800 preview as SVG files in store-assets/
+|-- scripts/pack.js            # Builds threadly.zip, one top-level folder named threadly (npm run pack)
+|-- docs/index.html            # This README as one self-contained page with a table of contents
+|-- scripts/reset-2fa.js       # Turn off two-factor login for a locked-out admin
+|-- scripts/demo-reset.js      # Puts a demo site back to its starting state (npm run demo:reset -- --yes); lib/ holds its guard and purge
+|-- scripts/generate-*.js      # Build the bundled brand and product SVG artwork (lib/garments.js)
+|-- tests/                     # Automated tests (npm test)
+|-- Dockerfile / docker-compose.yml   # One-command Docker setup
+|-- server.js                  # App entry point
+|-- CREDITS.md / LICENSE.txt   # Image credits and licence
+`-- .env.example                # Environment variable template
+</code></pre>
+<hr>
+<h2 id="tested-and-untested">Tested and untested</h2>
+<p>The automated tests (<code>npm test</code>) run against a fake database and mocked payment gateways, email and AI services, so they need no internet and no accounts. They check the shop&#39;s own rules thoroughly: money in whole minor units, stock, coupons, orders, payouts, permissions and security. They cannot show how real services behave. Before you go live, try these once yourself (<code>TESTING_GUIDE.md</code> has the steps):</p>
+<ul>
+<li><strong>MongoDB.</strong> The atomic stock, coupon and order updates are tested against the fake database only. Run a few real orders (including two buyers racing for the last item) on your own MongoDB.</li>
+<li><strong>Payment gateways.</strong> Make one sandbox payment on every gateway you switch on. Currencies with unusual decimals need extra care: <strong>HUF</strong> and <strong>TWD</strong> (whole units on PayPal), <strong>three-decimal currencies</strong> such as BHD and KWD, and <strong>ISK</strong> and <strong>UGX</strong> (kept at two decimals, as Stripe expects). The amounts follow each provider&#39;s published rules, but only a sandbox payment proves your account accepts them.</li>
+<li><strong>Email and AI chat.</strong> Send one real order email and one chat message with your own provider keys.</li>
+<li><strong>Languages.</strong> The storefront, cart, checkout, payment result pages, customer messages and the seller dashboard are available in English, Bengali, Arabic, Spanish, French and Hindi (about 590 phrases per language). The five translations are AI-drafted: have a native speaker check them before you advertise them. The admin panel, the policy pages (privacy, terms, returns, shipping, FAQ, contact), e-mails and the offline page stay English.</li>
+</ul>
+<hr>
+<h2 id="limits-to-know-before-you-launch">Limits to know before you launch</h2>
+<ul>
+<li><strong>No currency sign.</strong> Prices are shown as plain numbers. Online payments stay off until <code>CURRENCY_CODE</code> is set.</li>
+<li><strong>Refunds are manual.</strong> Cancelling a paid order flags it <code>REFUND_DUE</code>. You send the money back yourself in your payment provider&#39;s dashboard.</li>
+<li><strong>Payouts are manual.</strong> Seller earnings and payouts are recorded in the admin panel, but the app does not move money. You pay sellers yourself.</li>
+<li><strong>Translations.</strong> The five translations are AI-drafted. The admin panel, policy pages, emails and the offline page are English only.</li>
+</ul>
+<hr>
+<h2 id="security-notes">Security Notes</h2>
+<ul>
+<li>Admin credentials are never stored in plain text - only a bcrypt hash.</li>
+<li>All admin write operations require both an authenticated session <strong>and</strong>
+a CSRF token, issued via <code>/admin/csrf-token</code> after login.</li>
+<li>Login endpoints are rate-limited (5 attempts / 15 minutes for admin, 10 /
+15 minutes for customer auth) to resist brute-force attempts.</li>
+<li>Sessions are regenerated on login to prevent session fixation.</li>
+<li>An admin session stays valid for 1 hour of inactivity, refreshed on every
+admin action - no need to log in again just for browsing the store and
+coming back. Leaving it untouched for over an hour asks for the password
+again.</li>
+<li>Security headers are added with <code>helmet</code>.</li>
+<li>Payments are confirmed only after the gateway itself verifies them: the
+SSLCommerz redirect and IPN both call the validation API and check that the
+payment belongs to the order and covers its full amount.</li>
+<li>Order lists and customer details are never public. Customers see only their
+own orders after logging in, and real-time events carry no customer data.</li>
+<li><strong>Email verification:</strong> a customer sees orders placed while logged in right
+away, but guest orders placed with their email address only after they click
+the link we email them (anyone can type any email when registering). &quot;My
+Orders&quot; is shown only to the signed-in owner and returns the items, status, totals, coupon code,
+payment method, delivery address, date and order reference; it never returns the phone number or a
+manual payment reference. Without email settings in <code>.env</code> no verification or password
+reset email is sent, and the links are not written to the server log.</li>
+<li>Stock is reserved with an atomic update when an order is placed, so the last
+unit cannot be sold twice. Orders that are never paid are cancelled
+<code>PENDING_ORDER_TTL_MINUTES</code> + 10 minutes after they were placed and their
+stock is released.</li>
+<li><strong>Stock and the admin panel:</strong> cancelling an order that has not shipped
+returns its stock (once); cancelling a shipped or delivered order does not.
+Reopening a cancelled order takes the stock again, and is refused when there
+is not enough.</li>
+<li><strong>Paid after cancellation:</strong> if a verified payment arrives for an order that
+was already cancelled, the customer is told to contact you, the order gets a
+red <em>Paid after cancellation</em> badge in the admin panel, and a line starting
+<code>[ACTION NEEDED]</code> is written to the server log. Set its status back to
+<em>Confirmed</em> to reopen it (stock is taken again) or refund the payment from
+your gateway.</li>
+<li><strong>Coupons</strong> are checked and priced on the server only. Using one is a single
+conditional database update (all rules in the filter), and the cart box is
+rate limited. Coupon codes are escaped in pages and emails.</li>
+<li><strong>Cash on Delivery</strong> orders are priced and checked on the server like all
+others (phone, address and <code>COD_MAX_AMOUNT</code> included), are rate limited with
+the other orders, and can only be marked as paid by a logged-in admin with a
+CSRF token and the <code>order.edit</code> permission.</li>
+<li>The chatbot endpoint has its own rate limit (10 messages per minute per IP), and each visitor address has a daily share of the shop-wide chat limit (<code>CHAT_DAILY_LIMIT_PER_IP</code>). Chat history is kept in server memory under a random <code>tl_chat</code> cookie, not in the session store.</li>
+<li>A customer or admin account refuses further logins for 15 minutes after 10 wrong passwords in 15 minutes, on top of the per-IP limit. The count lives in server memory, so a restart clears it, and someone who knows an account name can lock that account for a short while; resetting the password lifts the lock for a customer.</li>
+<li>One email address receives at most 5 order emails and 3 verification or reset links per hour, so a stranger&#39;s address typed at checkout cannot be flooded.</li>
+<li>Cash on Delivery checkouts have their own limit (<code>COD_ORDER_RATE_LIMIT_MAX</code>, default 5 per hour per address).</li>
+<li>Order creation is rate limited (20 accepted orders per 15 minutes per IP by default, <code>ORDER_RATE_LIMIT_MAX</code>),
+and an order is limited to 20 lines, 10 of one item per line, and bounded
+lengths for name, email, phone and address. This stops one visitor from
+tying up the stock with unpaid orders. Customer-supplied text is escaped in
+all emails.</li>
+<li><strong>Rate limits are per IP address.</strong> Shoppers who share one IP (mobile carrier
+networks, offices, shared Wi-Fi) share the limits, e.g. 20 orders per 15
+minutes, 5 sign-ups per hour and 300 API calls per 15 minutes. <code>/api/payment/*</code>
+skips the global limit so payment callbacks are never dropped.</li>
+<li><strong>Reverse proxy:</strong> if nginx or a load balancer sits in front and <code>TRUST_PROXY</code>
+is <code>0</code>, every visitor looks like the same IP and the whole site can lock
+itself out. The server prints a warning at start-up when this looks likely.</li>
+<li>Every order or stock event makes each open storefront reload the product
+list (400 ms debounced). The list is fetched in pages of 200 products, but the page
+loads every page again after each event. That is fine for a small catalogue; for a very large
+catalogue or heavy traffic, load only the visible category or page.</li>
+<li>Behind nginx or a hosting platform, set <code>TRUST_PROXY=1</code> (or the real
+number of proxies) so secure cookies and rate limits see the right client.
+The default is <code>0</code>, which is right when the app is exposed directly.</li>
+<li>Set <code>NODE_ENV=production</code> and a real <code>ALLOWED_ORIGIN</code> before deploying
+live - this locks down CORS and enables secure cookies. In production the
+server refuses to start unless <code>SESSION_SECRET</code> is set to a real random value
+of at least 32 characters (the placeholder from <code>.env.example</code> is rejected).
+Outside production a missing or weak secret gives a random per-run secret and
+a warning (everyone is logged out at each restart); there is no built-in secret.</li>
+<li><strong>Cross-site writes:</strong> every state-changing request under <code>/api/users</code>,
+<code>/api/vendor</code> and the storefront&#39;s own writes (<code>POST /api/orders</code>, <code>/api/coupons/validate</code>,
+<code>/api/chat</code> and <code>/api/orders/:id/payment-reference</code>) is refused with 403 when its <code>Origin</code> is another site or the
+opaque <code>null</code>. Payment callbacks and webhooks are exempt (gateways call them
+from elsewhere). The admin API uses its own per-session CSRF token. Behind a
+proxy that rewrites the Host header, set <code>BASE_URL</code> or <code>ALLOWED_ORIGIN</code>.</li>
+<li>Product titles and shop names lose <code>&lt;</code>, <code>&gt;</code> and control characters; CSV import
+always drops a leading <code>=</code> or <code>@</code> (and leading spaces or tabs), and drops a leading <code>+</code> or <code>-</code> unless the
+rest is plain words and numbers (so &quot;-20% Sale Tee&quot; is kept), so a spreadsheet never runs a cell as a formula.</li>
+<li>Online payment needs a valid phone number and a full delivery address.</li>
+<li>The manual-payment reference route is rate limited (20 requests per 15 minutes per IP address). A reference is
+never refused, because anyone could copy a stranger&#39;s real reference to block that customer. When two orders carry
+the same reference, both are flagged <em>Same payment reference on another order</em> in the admin panel (for accounts that
+may see payment references). You check the transfer in your bank or wallet and confirm only the order it belongs to.</li>
+<li>Access logs blank every query value whose name looks secret (tokens, keys, codes, transaction ids). The password reset
+link puts its token after a <code>#</code>, which a browser never sends to the server. Changing or resetting a password logs the
+customer out of their other devices.</li>
+<li>Amounts follow the currency&#39;s own decimals (see <em>Currency</em>): whole units for JPY, KRW, VND and similar, three
+decimals for KWD, BHD and similar, two for everything else, in prices, totals and card amounts alike.</li>
+</ul>
+<h2 id="optional-money-rules">Optional money rules</h2>
+<p>Three rules change who is paid what. All are <strong>off</strong> by default. Decide them with your sellers first.
+With all three off, earnings follow the standard rules above: the payout hold (<code>PAYOUT_HOLD_DAYS</code>, 7 days by
+default) applies, and a cancelled order never puts a shipped seller&#39;s goods back in the stock.</p>
+<ul>
+<li><code>SELLER_KEEPS_SHIPPED_ON_CANCEL=true</code>: a seller who already shipped their part
+keeps that earning when the whole order is cancelled (shipped goods are never
+restocked, with or without this rule; only the other items are), and reopening the
+order leaves the kept part alone.</li>
+<li><code>COUPON_SPLIT_PRO_RATA=true</code>: a coupon is shared across the sellers&#39; items in
+proportion to their value (in whole minor units, remainder to the largest
+line). Commission and earnings are worked out on the price after the coupon,
+so a coupon larger than the commission is not refused.</li>
+<li><code>MARKETPLACE_FUNDS_COUPONS=true</code>: the marketplace pays for the coupon, and the
+sellers&#39; earnings are worked out on the full price. It wins if both are set.</li>
+</ul>
+<p>A cancelled-then-reopened order that was already settled is reversed with a
+generation number.</p>
+<hr>
+<h2 id="languages-first-run-setup-and-demo-mode">Languages, first-run setup and demo mode</h2>
+<p><strong>Languages.</strong> The Bengali, Arabic, Spanish, French and Hindi texts were drafted with the help of AI and have not been reviewed by native speakers. Have each language you sell in checked before you rely on it, especially the checkout, payment and policy wording. The picker is in the navbar. Files are in <code>public/locales/</code>. The page text is matched to keys by its English wording, so only text that has a key is translated; everything else stays English. Covered: navigation, shop, product cards, cart, checkout, form errors, order history, wishlist, reviews, payment result pages, server messages shown to customers and sellers (matched by their English text, with <code>{name}</code> placeholders for values), and the seller dashboard. Not covered: the admin panel, the policy pages, e-mails, the offline page, the example values in form fields, and anything sellers or customers type. Text with a value in it is written as <code>Only {n} left</code> in <code>en.json</code>; a translation may move the placeholder, and it must keep the same placeholders. Server messages are translated in the browser from their English wording, so a new message needs a new key. Names and titles that users enter are never translated. To add a language, copy <code>en.json</code>, translate the values, add it to <code>LANGS</code> in <code>public/js/i18n.js</code>, and to <code>RTL</code> if it reads right to left. Arabic loads Bootstrap&#39;s own right-to-left stylesheet (<code>bootstrap.rtl.min.css</code> 5.3.3, with its integrity hash) in place of the normal one. The translations are AI-drafted: have a native speaker review <code>bn.json</code>, <code>ar.json</code>, <code>es.json</code>, <code>fr.json</code> and <code>hi.json</code>, and look at each page in Arabic.</p>
+<p><strong>First-run setup.</strong> With no real admin in <code>.env</code> and none in the database, open <code>/setup</code>. It creates the owner account (username and password) and nothing else. Store name, currency and payment gateways are set in <code>.env</code>.</p>
+<ul>
+<li><code>SETUP_TOKEN</code> (16 or more characters, entered on the page) is required, except for a plain local run. That means all of these: <code>NODE_ENV</code> is not <code>production</code>, <code>BASE_URL</code> is <code>localhost</code> or <code>127.0.0.1</code>, <code>TRUST_PROXY</code> is unset or 0, the request has no proxy headers, its <code>Host</code> is local, and it comes from the same machine. If <code>SETUP_TOKEN</code> is set it is always checked.</li>
+<li><code>/setup</code> answers 404 once an admin exists, and <code>/setup.html</code> redirects to <code>/setup</code>.</li>
+<li>A half-finished <code>.env</code> admin keeps <code>/setup</code> closed. If <code>ADMIN_PASSWORD_HASH</code> is set but is not a clean bcrypt hash (quotes kept around it, or a hash cut short by Docker Compose), the server prints a warning at start. To recover, fix the value in <code>.env</code>, or run <code>npm run create-admin &lt;username&gt; &lt;password&gt; owner</code>. A missing hash or the template placeholder leaves <code>/setup</code> open.</li>
+<li>The <code>.env</code> template values (<code>ADMIN_USERNAME=admin</code> and the placeholder hash) never count as an admin and can never be used to log in.</li>
+<li>The owner is claimed with one database document (collection <code>setuplocks</code>, <code>_id</code> <code>owner</code>), so several server processes starting together create one owner. The loser gets 409. A claim older than five minutes is treated as left by a crashed process. If <code>/setup</code> keeps answering 409 and no admin exists, delete that document or use <code>npm run create-admin</code>.</li>
+</ul>
+<p><strong>Demo mode.</strong> Set <code>DEMO_MODE=true</code> to:</p>
+<ul>
+<li>refuse deletes, and changes to staff, roles, passwords and 2FA;</li>
+<li>refuse edits to vendors, vendor payouts and refund marks;</li>
+<li>send no email at all.</li>
+</ul>
+<p>Products, coupons, reviews and order status stay editable, so reset the site regularly. Nothing resets by itself. Run <code>npm run demo:reset -- --yes</code> from cron, for example nightly. It removes all orders, coupons (and their redemptions), reviews, payouts and customer accounts, reseeds the store&#39;s and demo shops&#39; products, and recreates the demo owner. Without <code>--yes</code> (or <code>CONFIRM=yes</code>) it only prints what it would remove. It refuses to run unless <code>DEMO_MODE=true</code>, <code>DEMO_ADMIN_PASSWORD</code> is set (no default) and <code>DB_NAME</code> contains <code>demo</code>. <code>DEMO_ALLOW_ANY_DB=true</code> skips the name check on a database you know is disposable. Shops that visitors applied for are not removed. The seed creates sample shops and products, but no seller or customer logins; only the demo owner can sign in. Use sandbox keys for every payment gateway on a demo site.</p>
+<p>Environment variables: <code>SETUP_TOKEN</code>, <code>DEMO_MODE</code>, <code>DEMO_ADMIN_USER</code>, <code>DEMO_ADMIN_PASSWORD</code>, <code>DEMO_ALLOW_ANY_DB</code>, <code>CONFIRM</code>, <code>CREATE_ADMIN_PASSWORD</code> (set by the demo reset script; see <code>.env.example</code>).</p>
+<hr>
+<h2 id="customizing">Customizing</h2>
+<h3 id="rebranding-in-five-minutes">Rebranding in five minutes</h3>
+<ol>
+<li><code>.env</code>: set <code>SITE_NAME</code> (page titles, link previews) and <code>SITE_DESCRIPTION</code>.</li>
+<li>That is all for the name. The pages, the seller dashboard, the admin panel, the payment pages, e-mails and the
+chatbot all show <code>SITE_NAME</code>: <code>public/js/brand.js</code> reads it once from <code>/api/site-info</code> and fills in every element
+marked <code>data-brand</code>, <code>data-brand-text</code> or <code>data-brand-alt</code>. Without <code>SITE_NAME</code> the pages show the default name
+exactly as before. The default is set in one place, <code>FALLBACK</code> in <code>public/js/brand.js</code> (and <code>DEFAULT_SITE_NAME</code> in
+<code>services/seo.js</code> and <code>services/brand.js</code> for the server). To put the name into a page you add yourself, give the
+element a <code>data-brand</code> attribute (or <code>data-brand-text=&quot;Sell on {name}&quot;</code>) and load <code>/js/brand.js</code> before your other
+scripts. The footer contact lines come from <code>.env</code>: set <code>SUPPORT_EMAIL</code>, <code>SUPPORT_PHONE</code> and <code>SUPPORT_ADDRESS</code>.
+Any line you leave empty is not shown, so the footer never displays placeholder text.</li>
+<li>Colours: edit the variables at the top of <code>public/css/marketplace.css</code>
+(<code>--mk-ink</code>, <code>--mk-accent</code>, ...).</li>
+<li>Logo and homepage picture: replace <code>public/img/logo.svg</code> and
+<code>public/img/hero.svg</code> (or edit and re-run <code>scripts/generate-brand-assets.js</code>),
+and replace <code>public/img/og-default.png</code>.</li>
+</ol>
+<ul>
+<li><strong>Change or add a payment gateway:</strong> SSLCommerz and Stripe are integrated
+in <code>routes/api.js</code>; PayPal, Flutterwave and Mollie are in
+<code>services/intlGateways.js</code> (plain HTTPS calls, no extra packages). To add
+another gateway, copy the pattern of one of those three: create the payment,
+save its reference on the order, and confirm it only after asking the
+gateway what happened.</li>
+<li><strong>Change the chatbot&#39;s tone or scope:</strong> edit <code>systemPrompt()</code> in
+<code>services/chatPolicy.js</code>.</li>
+<li><strong>Add product fields:</strong> extend <code>models/Product.js</code>, then update the admin
+form in <code>public/js/admin.js</code> and the storefront rendering in
+<code>public/js/app.js</code>.</li>
+</ul>
+<hr>
+<h2 id="image-credits">Image Credits</h2>
+<p>All images in this package are original artwork created for it, so there are
+no third-party photo licenses to worry about:</p>
+<ul>
+<li><code>public/img/logo.svg</code> is the logo (navbar, chat button, admin panel, invoice)
+and <code>public/img/hero.svg</code> is the homepage hero picture.</li>
+<li><code>public/img/products/</code> holds one illustration for each demo product in
+<code>seed/catalog.js</code>. They are drawn in code: run <code>node scripts/generate-clothing-images.js</code>
+to redraw them and <code>node scripts/generate-brand-assets.js</code> to redraw the logo and
+homepage artwork. <code>public/img/icon-192.png</code> and <code>icon-512.png</code> are the app icons (redraw them with
+<code>node scripts/generate-pwa-icons.js</code>). <code>public/img/og-default.png</code> is the link-preview picture shown
+when the site is shared; replace it with your own 1200x630 image.</li>
+</ul>
+<p>They are demo artwork, drawn as simple vector illustrations. Before running a
+live store, replace the logo and hero with your own branding (keep the same file
+names, or edit the <code>&lt;img&gt;</code> tags in <code>public/index.html</code> and <code>public/admin.html</code>)
+and add your own product photos. There are two ways:</p>
+<ol>
+<li><strong>Upload in the admin panel</strong> (PNG, JPG, WebP or GIF, up to 2 MB). By default
+the picture is saved as a file in <code>UPLOAD_DIR</code> (default <code>uploads/</code>) and served from <code>/uploads/</code>, so that
+folder must be writable and kept across restarts and deployments (see <em>Sizes and product pictures</em>).
+With <code>UPLOAD_STORAGE=database</code> it is stored in the database instead and served from
+<code>/api/products/&lt;id&gt;/image</code>, so no folder is needed.</li>
+<li><strong>Put the files in a folder.</strong> Copy them into <code>public/img/products/</code> and use
+an address like <code>/img/products/my-shirt.jpg</code> as the product&#39;s image (in the
+admin panel, or in <code>seed/seed.js</code> if you use the seed script). Photos placed
+directly in <code>public/img/</code> are not bundled by the project&#39;s own tests; keep
+them in <code>public/img/products/</code>.</li>
+</ol>
+<p>SVG uploads are refused (an SVG can carry scripts); SVG files you ship in
+<code>public/img/</code> are fine.</p>
+<hr>
+<h2 id="license">License</h2>
+<p>See <code>LICENSE.txt</code> for the license terms that apply to your purchase
+(Regular or Extended, per the license selected at checkout).</p>
+<hr>
+<h2 id="support">Support</h2>
+<p><strong>How to get help:</strong> use the support / comments section of the item page on the
+marketplace you bought it from (this is the only support channel; please do not
+send private messages with passwords or keys).</p>
+<p><strong>What to include</strong> so the problem can be reproduced quickly:</p>
+<ol>
+<li>Whether you run it with Docker or directly, and on which operating system.</li>
+<li>Your Node.js version (<code>node -v</code>) and MongoDB version (or Atlas).</li>
+<li>The exact steps you took, what you expected, and what happened instead.</li>
+<li>The error text from the terminal or the browser console (F12). <strong>Remove any
+passwords, API keys and your <code>.env</code> contents first.</strong></li>
+</ol>
+<p><strong>What support covers:</strong> installing and starting the package as described in
+this README, bugs in the code that ships, and questions about its settings.</p>
+<p><strong>What it does not cover:</strong> custom development or design changes, setting up
+your own accounts with payment providers, email, or AI services, hosting and
+server administration, and problems caused by changes you made to the code.</p>
+<p>If you find a security problem, say so in the support request without posting
+details publicly, and it will be handled first.</p>
+
+<hr>
+<p><small>This page is generated from <code>README.md</code>; the README is the master copy.</small></p>
+</main>
+</div>
+</body>
+</html>

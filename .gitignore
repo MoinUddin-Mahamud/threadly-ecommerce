@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+
+# Secrets and local configuration (never commit these; .env.example is the template)
+.env
+.env.*
+!.env.example
+
+# Uploaded product pictures (created at run time)
+uploads/
+
+# Logs and temporary files
+*.log
+npm-debug.log*
+.npm/
+tmp/
+.cache/
+
+# Test and coverage output
+coverage/
+.nyc_output/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Build output and archives
+dist/
+*.zip
+
+node_modules/

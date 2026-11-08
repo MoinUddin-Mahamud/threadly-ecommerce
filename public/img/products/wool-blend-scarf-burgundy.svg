@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Wool Blend Scarf - Burgundy">
+<title>Wool Blend Scarf - Burgundy</title>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ece2e3"/><stop offset="1" stop-color="#dac4c8"/></linearGradient></defs>
+<rect width="400" height="500" fill="url(#bg)"/>
+<circle cx="200" cy="250" r="168" fill="#ffffff" opacity=".38"/>
+<ellipse cx="200" cy="474" rx="118" ry="11" fill="#000" opacity=".12"/>
+<g stroke="#000" stroke-opacity=".14" stroke-width="2" stroke-linejoin="round"><path d="M106 96 Q200 156 294 96 L302 152 Q200 214 98 152 Z" fill="#7a2e3a"/>
+<path d="M164 176 L238 176 L268 432 L196 432 Z" fill="#7a2e3a"/>
+<path d="M214 196 L262 184 L304 424 L252 432 Z" fill="#5f242d"/>
+<path d="M176 290 L252 290 M180 320 L260 320 M184 350 L266 350" stroke="#af8289" stroke-width="6" stroke-opacity="1" opacity=".55"/>
+<path d="M200 432 L268 432 M252 432 L304 424" stroke="#af8289" stroke-width="8" stroke-opacity="1" stroke-dasharray="2 7" stroke-linecap="round" opacity=".7"/></g>
+</svg>

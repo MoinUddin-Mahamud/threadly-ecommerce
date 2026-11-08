@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 600" role="img" aria-label="A hoodie, a dress and a pair of jeans">
+<title>A hoodie, a dress and a pair of jeans</title>
+<circle cx="320" cy="300" r="268" fill="#ebe5d2"/>
+<circle cx="450" cy="190" r="120" fill="#a3b18a" opacity=".35"/>
+<circle cx="170" cy="440" r="90" fill="#e0a92e" opacity=".18"/>
+<g transform="translate(-14 70) rotate(-7 200 250) scale(.78)"><g stroke="#000" stroke-opacity=".14" stroke-width="2" stroke-linejoin="round"><path d="M142 96 Q150 20 200 20 Q250 20 258 96 Q200 132 142 96 Z" fill="#af8424"/>
+<path d="M138 96 L96 110 L46 340 L92 352 L128 206 L128 414 Q128 422 136 422 L264 422 Q272 422 272 414 L272 206 L308 352 L354 340 L304 110 L262 96 Q200 140 138 96 Z" fill="#e0a92e"/>
+<path d="M158 98 Q200 142 242 98 Q238 54 200 50 Q162 54 158 98 Z" fill="#8b691d"/>
+<path d="M46 340 L92 352 L98 323 L52 311 Z M354 340 L308 352 L302 323 L348 311 Z" fill="#af8424"/>
+<path d="M128 398 L272 398 L272 414 Q272 422 264 422 L136 422 Q128 422 128 414 Z" fill="#af8424"/>
+<path d="M150 322 L250 322 L264 394 L136 394 Z" fill="#af8424" opacity=".7"/>
+<path d="M184 128 L182 188 M216 128 L218 188" stroke="#f3ddab" stroke-width="4" stroke-linecap="round"/></g></g>
+<g transform="translate(330 78) rotate(7 200 250) scale(.76)"><g stroke="#000" stroke-opacity=".14" stroke-width="2" stroke-linejoin="round"><path d="M126 70 L274 70 L292 436 L212 436 L200 196 L188 436 L108 436 Z" fill="#2f4b7c"/>
+<path d="M126 70 L274 70 L274 98 L126 98 Z" fill="#253b61"/>
+<path d="M200 98 L200 196 M200 150 Q214 150 214 128" stroke="#7e8fae" stroke-width="2.5" fill="none" stroke-dasharray="6 4"/>
+<path d="M134 100 Q146 150 178 118 M266 100 Q254 150 222 118" stroke="#7e8fae" stroke-width="2.5" fill="none" stroke-dasharray="6 4"/>
+<path d="M118 418 L190 418 M210 418 L282 418" stroke="#7e8fae" stroke-width="2.5" stroke-dasharray="6 4"/>
+<g fill="#253b61"><rect x="146" y="64" width="9" height="22" rx="2"/><rect x="245" y="64" width="9" height="22" rx="2"/><rect x="195" y="64" width="10" height="22" rx="2"/></g></g></g>
+<g transform="translate(150 22) scale(.93)"><g stroke="#000" stroke-opacity=".14" stroke-width="2" stroke-linejoin="round"><path d="M166 66 L184 66 L190 122 Q200 136 210 122 L216 66 L234 66 L244 186 L336 436 Q200 470 64 436 L156 186 Z" fill="#8fb8de"/>
+<path d="M156 178 L244 178 L247 198 L153 198 Z" fill="#7293b2"/>
+<path d="M200 198 L200 452 M178 198 L132 446 M222 198 L268 446" stroke="#7293b2" stroke-width="2.5" opacity=".28" fill="none"/>
+<path d="M92 430 Q200 462 308 430" stroke="#b1cde8" stroke-width="3" opacity=".5" fill="none"/></g></g>
+</svg>

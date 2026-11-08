@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Oxford Button-Up Shirt - Sky">
+<title>Oxford Button-Up Shirt - Sky</title>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9e3d9"/><stop offset="1" stop-color="#d9d1c4"/></linearGradient></defs>
+<rect width="400" height="500" fill="url(#bg)"/>
+<circle cx="200" cy="250" r="168" fill="#ffffff" opacity=".38"/>
+<ellipse cx="200" cy="474" rx="118" ry="11" fill="#000" opacity=".12"/>
+<g stroke="#000" stroke-opacity=".14" stroke-width="2" stroke-linejoin="round"><path d="M138 92 L92 112 L52 182 L98 208 L124 176 L124 410 Q124 418 132 418 L268 418 Q276 418 276 410 L276 176 L302 208 L348 182 L308 112 L262 92 Q200 128 138 92 Z" fill="#bcd4e6"/>
+<path d="M146 90 L200 146 L168 156 L132 104 Z M254 90 L200 146 L232 156 L268 104 Z" fill="#d3e3ef" stroke="#96aab8" stroke-width="2"/>
+<path d="M200 146 L200 418" stroke="#96aab8" stroke-width="3" opacity=".5"/>
+<rect x="222" y="196" width="38" height="42" rx="3" fill="none" stroke="#96aab8" stroke-width="2.5" opacity=".6"/>
+<g fill="#d3e3ef" stroke="#96aab8" stroke-width="1.5"><circle cx="200" cy="178" r="4.5"/><circle cx="200" cy="230" r="4.5"/><circle cx="200" cy="282" r="4.5"/><circle cx="200" cy="334" r="4.5"/><circle cx="200" cy="386" r="4.5"/></g></g>
+</svg>

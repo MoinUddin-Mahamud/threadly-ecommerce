@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Faux Leather Belt - Brown">
+<title>Faux Leather Belt - Brown</title>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eae6e2"/><stop offset="1" stop-color="#d6ccc5"/></linearGradient></defs>
+<rect width="400" height="500" fill="url(#bg)"/>
+<circle cx="200" cy="250" r="168" fill="#ffffff" opacity=".38"/>
+<ellipse cx="200" cy="474" rx="118" ry="11" fill="#000" opacity=".12"/>
+<g stroke="#000" stroke-opacity=".14" stroke-width="2" stroke-linejoin="round"><path d="M44 226 L356 226 Q364 226 364 234 L364 266 Q364 274 356 274 L44 274 Q36 274 36 266 L36 234 Q36 226 44 226 Z" fill="#6b4a2f"/>
+<path d="M50 238 L350 238 M50 262 L350 262" stroke="#97806d" stroke-width="2.5" stroke-opacity="1" stroke-dasharray="7 5" opacity=".7" fill="none"/>
+<g fill="#533a25"><circle cx="276" cy="250" r="5"/><circle cx="300" cy="250" r="5"/><circle cx="324" cy="250" r="5"/></g>
+<rect x="146" y="206" width="84" height="88" rx="10" fill="none" stroke="#c9a24a" stroke-width="12" stroke-opacity="1"/>
+<rect x="190" y="242" width="52" height="16" rx="4" fill="#c9a24a"/></g>
+</svg>

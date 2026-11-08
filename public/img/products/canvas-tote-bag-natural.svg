@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Canvas Tote Bag - Natural">
+<title>Canvas Tote Bag - Natural</title>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9e3d9"/><stop offset="1" stop-color="#d9d1c4"/></linearGradient></defs>
+<rect width="400" height="500" fill="url(#bg)"/>
+<circle cx="200" cy="250" r="168" fill="#ffffff" opacity=".38"/>
+<ellipse cx="200" cy="474" rx="118" ry="11" fill="#000" opacity=".12"/>
+<g stroke="#000" stroke-opacity=".14" stroke-width="2" stroke-linejoin="round"><path d="M148 206 Q148 70 200 70 Q252 70 252 206" fill="none" stroke="#a89881" stroke-width="14" stroke-opacity="1" stroke-linecap="round"/>
+<path d="M98 190 L302 190 L322 438 Q322 452 308 452 L92 452 Q78 452 78 438 Z" fill="#d8c3a5"/>
+<path d="M98 190 L302 190 L305 232 L95 232 Z" fill="#a89881" opacity=".5"/>
+<rect x="164" y="288" width="72" height="72" rx="8" fill="none" stroke="#e6d8c5" stroke-width="3.5" stroke-opacity="1" opacity=".75"/>
+<path d="M180 324 L220 324 M200 304 L200 344" stroke="#e6d8c5" stroke-width="3.5" stroke-opacity="1" stroke-linecap="round" opacity=".75"/></g>
+</svg>

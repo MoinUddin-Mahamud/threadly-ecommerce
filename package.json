@@ -1,0 +1,63 @@
+{
+  "name": "threadly",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "seed": "node seed/seed.js",
+    "test": "node --test",
+    "create-admin": "node scripts/create-admin.js",
+    "migrate-images": "node scripts/migrate-images.js",
+    "demo:reset": "node scripts/demo-reset.js",
+    "pack": "node scripts/pack.js",
+    "docs": "node scripts/build-docs.js"
+  },
+  "keywords": [
+    "marketplace",
+    "multi-vendor",
+    "clothing",
+    "ecommerce",
+    "nodejs",
+    "express",
+    "mongodb",
+    "socketio",
+    "sslcommerz",
+    "stripe",
+    "paypal",
+    "cash-on-delivery",
+    "admin-dashboard",
+    "ai-chatbot",
+    "gemini"
+  ],
+  "author": "Moin Uddin Mahamud",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "description": "A real-time, self-hosted e-commerce platform and multi-vendor clothing marketplace with an AI chatbot, built with Node.js, Express and MongoDB.",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "connect-mongo": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.5.2",
+    "express-session": "^1.18.2",
+    "helmet": "^8.3.0",
+    "mongoose": "^9.0.0",
+    "morgan": "^1.10.1",
+    "nodemailer": "^10.2.1",
+    "socket.io": "^4.8.1",
+    "sslcommerz-lts": "^1.2.0",
+    "stripe": "^22.0.0"
+  },
+  "devDependencies": {
+    "bootstrap": "5.3.3",
+    "supertest": "^7.3.0"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "overrides": {
+    "body-parser": "^2.4.0",
+    "form-data": "^4.0.6"
+  }
+}

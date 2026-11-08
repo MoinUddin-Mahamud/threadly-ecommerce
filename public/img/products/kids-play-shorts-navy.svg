@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Kids Play Shorts - Navy">
+<title>Kids Play Shorts - Navy</title>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e1e4ea"/><stop offset="1" stop-color="#c4c9d6"/></linearGradient></defs>
+<rect width="400" height="500" fill="url(#bg)"/>
+<circle cx="200" cy="250" r="168" fill="#ffffff" opacity=".38"/>
+<ellipse cx="200" cy="474" rx="118" ry="11" fill="#000" opacity=".12"/>
+<g transform="translate(200 270) scale(.82) translate(-200 -270)"><g stroke="#000" stroke-opacity=".14" stroke-width="2" stroke-linejoin="round"><path d="M126 110 L274 110 L294 304 L212 304 L200 206 L188 304 L106 304 Z" fill="#2c3e6b"/>
+<path d="M126 110 L274 110 L274 138 L126 138 Z" fill="#223053"/>
+<path d="M200 138 L200 206" stroke="#7c87a3" stroke-width="2.5" stroke-dasharray="6 4"/>
+<path d="M134 140 Q146 186 176 156 M266 140 Q254 186 224 156" stroke="#7c87a3" stroke-width="2.5" fill="none" stroke-dasharray="6 4"/>
+<path d="M112 290 L184 290 M216 290 L288 290" stroke="#7c87a3" stroke-width="2.5" stroke-dasharray="6 4"/></g></g>
+</svg>
